@@ -14,13 +14,13 @@ class CreateCheckinsTable extends Migration
     {
         Schema::create('checkins', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('placeId')->unsigned();
+            $table->text('placeId');
             $table->foreign('placeId')->references('id')->on('places');
             $table->float('longitude');
             $table->float('latitude');
             $table->integer('userId')->unsigned();
             $table->foreign('userId')->references('id')->on('users');
-            $table->timestamp('time');
+            $table->timestamps();
         });
     }
 

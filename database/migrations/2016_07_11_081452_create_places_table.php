@@ -13,11 +13,11 @@ class CreatePlacesTable extends Migration
     public function up()
     {
         Schema::create('places', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id',24)->unique();
             $table->float('longitude');
             $table->float('latitude');
             $table->text('name');
-            $table->date('dateCreated');
+            $table->timestamps();
         });
     }
 

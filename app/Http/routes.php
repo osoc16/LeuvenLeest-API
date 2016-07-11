@@ -11,8 +11,19 @@
 |
 */
 
+
 Route::get('/', function () { return view('welcome'); });
 
 // Search routes
 Route::get('/searching', 'SearchController@searching');
 Route::get('/search', 'SearchController@search');
+
+Route::get('/', function () {
+    $response = json_decode(file_get_contents(
+    		'https://api.foursquare.com/v2/venues/search'
+    		.'?client_id=QLT3TADFL45N2RUDTNPZO3DELG4G4ENPGJCVDIUL3CVFBWQJ'
+    		.'&client_secret=TXHQIDDTDZLDVLXLS3MQHNQE1T4SGN1VWWDNX3FWAEUPVHS4'
+    		.'&v=20150806&m=foursquare'
+    		.'&near=leuven'))->response;
+    return $response->venues;
+});

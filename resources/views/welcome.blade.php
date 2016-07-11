@@ -39,6 +39,9 @@
         <div class="container">
             <div class="content">
                 <div class="title">Laravel 5</div>
+                @foreach ($venues as $venue)
+                    <p>{{ $venue->name }}</p>
+                @endforeach
             </div>
         </div>
     </body>
