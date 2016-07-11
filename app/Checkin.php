@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Checkin extends Model
 {
-    protected $fillable = ['longitude','latitude'];
 
     public function place(){
     	return $this->belongsTo(Place::class);
@@ -16,5 +15,7 @@ class Checkin extends Model
     	return $this->belongsTo(User::class);
     }
 
-    public $timestamps = false;
+    public function getLocation(){
+    	return $this->hasOne(Geolocation::class);
+    }
 }

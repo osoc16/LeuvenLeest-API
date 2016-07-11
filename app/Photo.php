@@ -11,6 +11,4 @@ class Photo extends Model
 	public function place(){
 		return $this->belongsTo(Place::class);
 	}
-
-	public $timestamps = false;
 }
