@@ -14,7 +14,7 @@ class CreatePhotosTable extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('placeId',24);
+            $table->integer('placeId')->unsigned();
             $table->foreign('placeId')->references('id')->on('places');
             $table->integer('userId')->unsigned();
             $table->foreign('userId')->references('id')->on('users');

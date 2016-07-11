@@ -14,7 +14,7 @@ class CreateCheckinsTable extends Migration
     {
         Schema::create('checkins', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('placeId',24);
+            $table->integer('placeId')->unsigned();
             $table->foreign('placeId')->references('id')->on('places');
             $table->integer('geoId')->unsigned();
             $table->foreign('geoId')->references('id')->on('geolocations');

@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Http\Request;
 
-class PlaceSeeder extends Seeder
+class GeolocationSeeder extends Seeder
 {
 
 	const ENDPOINT_URL = 'https://api.foursquare.com/v2/venues/search';
@@ -30,12 +29,12 @@ class PlaceSeeder extends Seeder
         $venues = $response->venues;
 
         foreach($venues as $venue){
-        	
-        	$geo = DB::table('geolocations')->where('longitude',$venue->location->lng)
-        		->where('latitude',$venue->location->lat)->first();
-        	DB::table('places')->insert([['name' => $venue->name,
-        								  'geoId' => $geo->id,
-        								  'foursquareId' => $venue->id]]);
+        	$exists = DB::table('geolocations')->where('longitude',$venue->location->lng)
+        		->where('latitude',$venue->location->lat)->get();
+        	if(!$exists){
+        		DB::table('geolocations')->insert([['latitude' => $venue->location->lat,
+        											'longitude' => $venue->location->lng]]);
+        	}
         }
     }
 }
