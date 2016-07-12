@@ -25,7 +25,6 @@ class PlaceController extends Controller
         {
             $foursquareProvider = new FoursquareProvider();
             $venue = $foursquareProvider->getPlaceById($foursquareId);
-            Debugbar::info($venue);
             return $this->create($venue->response->venue);
         }
         return DB::table('places')->where('foursquareId',$foursquareId)->first();
@@ -33,7 +32,6 @@ class PlaceController extends Controller
 
     private function create($venue)
     {
-        Debugbar::info($venue->location);
         //Create a new geolocation for a place
         try
         {
