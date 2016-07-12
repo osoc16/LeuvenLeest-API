@@ -18,8 +18,8 @@ class PlaceSeeder extends Seeder
     {
         $response = json_decode(file_get_contents(
     		$this::ENDPOINT_URL
-    		.'?client_id='.env('FOURSQUARE_API_ID','')
-    		.'&client_secret='.env('FOURSQUARE_API_KEY','')
+    		.'?client_id='.env('FOURSQUARE_CLIENT_ID','')
+    		.'&client_secret='.env('FOURSQUARE_CLIENT_KEY','')
     		.'&ll=50.8798,4.7005'
     		.'&v=20150806&m=foursquare'
     		.'&radius=5000'

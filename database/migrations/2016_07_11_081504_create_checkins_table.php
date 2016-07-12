@@ -15,11 +15,11 @@ class CreateCheckinsTable extends Migration
         Schema::create('checkins', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('placeId')->unsigned();
-            $table->foreign('placeId')->references('id')->on('places');
+            $table->foreign('placeId')->references('id')->on('places')->onDelete('cascade');
             $table->integer('geoId')->unsigned();
-            $table->foreign('geoId')->references('id')->on('geolocations');
+            $table->foreign('geoId')->references('id')->on('geolocations')->onDelete('cascade');
             $table->integer('userId')->unsigned();
-            $table->foreign('userId')->references('id')->on('users');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

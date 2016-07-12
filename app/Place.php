@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Place extends Model
 {
-    protected $fillable = ['foursquareId','name'];
+    protected $fillable = ['foursquareId','geoId','name'];
     public $incrementing = false;
 
     public function checkins(){
