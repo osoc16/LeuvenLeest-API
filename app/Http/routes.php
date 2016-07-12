@@ -28,3 +28,5 @@ Route::get('/', function () {
     		.'&near=leuven'))->response;
     return json_encode($response->venues);
 });
+
+Route::get('/checkin/{foursquareId}/{longitude}/{latitude}','CheckinController@checkin');
