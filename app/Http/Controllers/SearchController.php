@@ -9,14 +9,8 @@ class SearchController extends Controller
 {
     public function __construct() {}
 
-    public function searching()
-    {
-        return view('search.searching');
-    }
+    public function searching() { return view('search.searching'); }
 
-    public function search()
-    {
-        return view('search.search');
-    }
+    public function search() { return view('search.search'); }
 
 }

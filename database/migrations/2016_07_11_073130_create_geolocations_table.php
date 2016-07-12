@@ -14,8 +14,8 @@ class CreateGeolocationsTable extends Migration
     {
         Schema::create('geolocations', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('longitude');
-            $table->double('latitude');
+            $table->float('longitude');
+            $table->float('latitude');
         });
     }
 

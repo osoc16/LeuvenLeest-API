@@ -39,11 +39,8 @@
         <div class="container">
             <div class="content">
                 <div class="title">Laravel 5</div>
-                @foreach ($locations as $location)
-                    <p>{{ $location->longitude }}</p>
-                    <p>{{ $location->latitude }}</p>
-                    <br/>
-                    <br/>
+                @foreach ($venues as $venue)
+                    <p>{{ $venue->name }}</p>
                 @endforeach
             </div>
         </div>
