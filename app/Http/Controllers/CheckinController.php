@@ -5,19 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Checkin;
-use App\Geolocation;
 use Debugbar;
 
 class CheckinController extends Controller
 {
+    private $placeController;
+    private $geolocationController;
+
+    public function __construct()
+    {
+        $this->placeController = new PlaceController();
+        $this->geolocationController = new GeolocationController();
+    }
+
     public function checkin($foursquareId, $longitude, $latitude)
     {
         if (!$foursquareId || !$longitude || !$latitude)
         {
             return 'Forgotten param';
         }
-        $placeController = new PlaceController();
-        $place = $placeController->getPlaceById($foursquareId);
+        $place = $this->placeController->getPlaceById($foursquareId);
         return $this->create($place, $longitude, $latitude);
     }
 
@@ -25,10 +32,7 @@ class CheckinController extends Controller
     {
         try
         {
-            $geoLocation = new Geolocation();
-            $geoLocation->longitude = $longitude;
-            $geoLocation->latitude = $latitude;
-            $geoLocation->save();
+            $geoLocation = $this->geolocationController->create($longitude, $latitude);
             $checkin = new Checkin();
             $checkin->placeId = $place->id;
             $checkin->geoId = $geoLocation->id;
