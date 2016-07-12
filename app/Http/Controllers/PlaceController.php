@@ -19,21 +19,19 @@ class PlaceController extends Controller
         return DB::table('places')->where('foursquareId', $foursquareId)->get() ? true : false;
     }
 
-    public function addPlace($foursquardId)
+    public function getPlaceById($foursquareId)
     {
         if(!$this->checkIfPlaceExists($foursquareId))
         {
             $foursquareProvider = new FoursquareProvider();
             $venue = $foursquareProvider->getPlaceById($foursquareId);
-            Debugbar::info($venue);
             return $this->create($venue->response->venue);
         }
-        return DB::table('places')->where('foursquareId',$foursquareId)->get();
+        return DB::table('places')->where('foursquareId',$foursquareId)->first();
     }
 
     private function create($venue)
     {
-        Debugbar::info($venue->location);
         //Create a new geolocation for a place
         try
         {

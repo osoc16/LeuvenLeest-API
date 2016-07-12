@@ -43,7 +43,7 @@ class FoursquareProvider
             ];
             $place = json_decode(file_get_contents(
                 'https://api.foursquare.com/v2/venues/50655812e4b07b9787f62cdf'
-                .'?client_id='.env('FOURSQUARE_CLIENT_ID').'&client_secret='.env('FOURSQUARE_CLIENT_SECRET').'&v=20150806'
+                .'?client_id='.env('FOURSQUARE_CLIENT_ID').'&client_secret='.env('FOURSQUARE_CLIENT_KEY').'&v=20150806'
                 ));
             Cache::add($key, $place, $this::CACHE_TIME);
             return $place;

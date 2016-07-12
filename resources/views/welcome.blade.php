@@ -4,6 +4,7 @@
         <title>Laravel</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <script src='https://code.jquery.com/jquery-3.0.0.min.js'></script>
 
         <style>
             html, body {
@@ -36,16 +37,48 @@
         </style>
     </head>
     <body>
+<meta content="{{ csrf_token() }}" name="_token">
+
         <div class="container">
             <div class="content">
                 <div class="title">Laravel 5</div>
-                @foreach ($locations as $location)
-                    <p>{{ $location->longitude }}</p>
-                    <p>{{ $location->latitude }}</p>
-                    <br/>
-                    <br/>
-                @endforeach
             </div>
         </div>
+        <script>
+            $(function() {
+
+            // $.post('/checkin/54750454498ed14f0c7d12a6/12345/12345', {
+            //         'body': '',
+            //         'discussion': '',
+            //         'id': ''
+            //     })
+
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: '/checkin/54750454498ed14f0c7d12a6/12345/12345',
+                    dataType : "json",
+                    processData:false,
+                    contentType:false,
+                    data: {
+                         '_token':$('meta[name="_token"]').attr('content')
+                    },
+                    success: function(response){
+                        console.log(response);
+                    },
+                    error: function(response) {
+                    }
+                })
+             });
+
+
+
+        </script>
     </body>
 </html>
