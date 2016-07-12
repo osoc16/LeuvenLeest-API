@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Checkin;
+use \Auth;
+use \DB;
 use Debugbar;
 
 class CheckinController extends Controller
@@ -40,6 +42,16 @@ class CheckinController extends Controller
             $checkin->save();
         } catch(Exception $ex) {
             throw new Exception('Error');
+        }
+        return $checkin;
+    }
+
+    public function getLatestCheckin()
+    {
+        $checkin  = DB::table('checkins')->where('userId',Auth::id())->orderBy('created_at', 'DESC')->first();
+        if (!$checkin)
+        {
+            return null;
         }
         return $checkin;
     }

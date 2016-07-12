@@ -30,3 +30,4 @@ Route::get('/places','PlaceController@addPlace');
 // });
 
 Route::post('/checkin/{foursquareId}/{longitude}/{latitude}','CheckinController@checkin');
+Route::get('/getLatestCheckin','CheckinController@getLatestCheckin');
