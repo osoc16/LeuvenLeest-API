@@ -20,4 +20,10 @@ class Place extends Model
     public function getLocation(){
     	return $this->hasOne(Geolocation::class);
     }
+
+    public $timestamps = false;
+
+
+
+
 }

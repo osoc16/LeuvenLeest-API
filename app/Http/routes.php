@@ -17,6 +17,7 @@ Route::get('/', function () { return view('welcome'); });
 // Search routes
 Route::get('/searching', 'SearchController@searching');
 Route::get('/search', 'SearchController@search');
+Route::get('/places','PlaceController@addPlace');
 
 Route::get('/', function () {
     $response = json_decode(file_get_contents(
@@ -25,5 +26,5 @@ Route::get('/', function () {
     		.'&client_secret=TXHQIDDTDZLDVLXLS3MQHNQE1T4SGN1VWWDNX3FWAEUPVHS4'
     		.'&v=20150806&m=foursquare'
     		.'&near=leuven'))->response;
-    return $response->venues;
+    return json_encode($response->venues);
 });

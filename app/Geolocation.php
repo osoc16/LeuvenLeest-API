@@ -9,7 +9,7 @@ class Geolocation extends Model
 	protected $fillable = ['longitude','latitude'];
 
 	public function place(){
-		return $this->belongsTo(Place::class):
+		return $this->belongsTo('Place');
 	}
 
 	public function checkins(){
