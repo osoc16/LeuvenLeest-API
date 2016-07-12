@@ -3,6 +3,9 @@ Cultuurconnect boekdelen project
 
 
 #Debugbar
+```
+https://github.com/barryvdh/laravel-debugbar
+```
 
 ##Install
 Add on top of file
