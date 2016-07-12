@@ -16,6 +16,7 @@ class CreateGeolocationsTable extends Migration
             $table->increments('id');
             $table->float('longitude');
             $table->float('latitude');
+            $table->timestamps();
         });
     }
 
