@@ -28,7 +28,7 @@ class PlaceController extends Controller
             Debugbar::info($venue);
             return $this->create($venue->response->venue);
         }
-        return DB::table('places')->where('foursquareId',$foursquareId)->get();
+        return DB::table('places')->where('foursquareId',$foursquareId)->first();
     }
 
     private function create($venue)
