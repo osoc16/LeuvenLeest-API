@@ -19,7 +19,7 @@ class PlaceController extends Controller
         return DB::table('places')->where('foursquareId', $foursquareId)->get() ? true : false;
     }
 
-    public function addPlace($foursquardId)
+    public function getPlaceById($foursquareId)
     {
         if(!$this->checkIfPlaceExists($foursquareId))
         {
