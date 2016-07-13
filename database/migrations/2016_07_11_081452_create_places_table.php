@@ -14,7 +14,7 @@ class CreatePlacesTable extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('foursquareId',24)->unique();
+            $table->string('foursquareId',24)->unique()->nullable();
             $table->integer('geoId')->unsigned();
             $table->foreign('geoId')->references('id')->on('geolocations')->onDelete('cascade');
             $table->text('name');
