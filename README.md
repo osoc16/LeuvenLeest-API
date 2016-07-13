@@ -33,27 +33,26 @@ Debugbar::addMessage('Another message', 'mylabel');
 ##Example
 ```
 $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-                    }
-                });
+    headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
+		 }
+});
 
-                $.ajax({
-                    type: "POST",
-                    url: '/checkin/54750454498ed14f0c7d12a6/12345/12345',
-                    dataType : "json",
-                    processData:false,
-                    contentType:false,
-                    data: {
-                         '_token':$('meta[name="_token"]').attr('content')
-                    },
-                    success: function(response){
-                        console.log(response);
-                    },
-                    error: function(response) {
-                    }
-                })
-             });
+$.ajax({
+    type: "POST",
+    url: '/checkin/54750454498ed14f0c7d12a6/12345/12345',
+    dataType : "json",
+    processData:false,
+    contentType:false,
+    data: {
+         '_token':$('meta[name="_token"]').attr('content')
+    },
+    success: function(response){
+        console.log(response);
+    },
+    error: function(response) {
+    }
+})
 ```
 
 ##Routes
