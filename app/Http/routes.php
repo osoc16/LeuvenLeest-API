@@ -20,5 +20,5 @@ Route::get('places/{id}','PlaceController@getPlaceById');
 Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
 
 //Checkin
-Route::put('/checkin/{foursquareId}/{latitude}/{longitude}','CheckinController@checkin');
+Route::put('/checkin','CheckinController@store');
 Route::get('/getLatestCheckin','CheckinController@getLatestCheckin');
