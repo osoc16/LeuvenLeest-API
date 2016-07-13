@@ -18,6 +18,14 @@ class CreatePlacesTable extends Migration
             $table->integer('geoId')->unsigned();
             $table->foreign('geoId')->references('id')->on('geolocations')->onDelete('cascade');
             $table->text('name');
+            $table->text('address')->nullable();
+            $table->longText('description')->nullable();
+            $table->integer('userId')->unsigned();
+            $table->foreign('userId')->references('id')->on('users');
+            $table->string('email')->nullable();
+            $table->integer('categoryId')->unsigned();
+            $table->foreign('categoryId')->references('id')->on('categories');
+            $table->string('site')->nullable();
             $table->timestamps();
         });
     }
