@@ -15,7 +15,7 @@
 Route::get('/', function () { return view('welcome'); });
 
 //Place
-Route::post('/places/add/{name}/{latitude}/{longitude}','PlaceController@addPlace');
+Route::put('/places/add/{name}/{latitude}/{longitude}','PlaceController@addPlace');
 Route::get('places/{id}','PlaceController@getPlaceById');
 Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
 
