@@ -7,6 +7,9 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use \Auth;
+use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -68,5 +71,68 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function getLogin(){
+        return view('auth.login');
+    }
+
+    public function postLogin(Request $request){
+        if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')],true)){
+            return redirect($this->redirectTo);
+        }
+        return 'wrong logindata';
+    }
+
+    public function getLogout(){
+        Auth::logout();
+        return 'user has logged out';
+        return redirect($this->redirectTo);
+    }
+
+    public function login($client){
+        if($client == 'fb'){
+            return Socialite::with('facebook')->redirect();
+        } else if($client == 'google'){
+            return Socialite::with('google')->redirect();
+        }
+    }
+
+    public function loginCallback($client){
+        if($client == 'fb'){
+            $user = Socialite::with('facebook')->user();
+        } else if($client == 'google'){
+            $user = Socialite::with('google')->user();
+        }
+        //return ' '.var_dump($user);
+
+        $pass = substr($user->name,1,3);
+        $pass .= strtoupper(substr($user->email,strpos($user->email,'@'),4));
+        $pass .= substr($user->id,4,4);
+
+        $userExists = User::where('email', $user->email)->first();
+        if(!$userExists){
+            $this->create([ 'name' => $user->name,
+                    'email' => $user->email,
+                    'password' => $pass, ]);
+        }  
+
+        Auth::attempt(['email' => $user->email, 'password' => $pass], true);
+
+        return redirect($this->redirectTo);
+    }
+
+    public function getRegister(){
+        return view('auth.register');
+    }
+
+    public function postRegister(Request $request){
+        $name = $request->input('username');
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $this->create([
+            'name' => $name
+            ]);
     }
 }
