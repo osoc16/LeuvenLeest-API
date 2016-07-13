@@ -13,21 +13,14 @@ use App\Geolocation;
 
 class PlaceController extends Controller
 {
-
-    private function checkIfPlaceExists($foursquareId = '50655812e4b07b9787f62cdf')
+    public function addPlace($name, $latitude, $longitude)
     {
-        return DB::table('places')->where('foursquareId', $foursquareId)->get() ? true : false;
+        return $this->create($name, $latitude, $longitude);
     }
 
-    public function getPlaceById($foursquareId)
+    public function getPlaceById($id)
     {
-        if(!$this->checkIfPlaceExists($foursquareId))
-        {
-            $foursquareProvider = new FoursquareProvider();
-            $venue = $foursquareProvider->getPlaceById($foursquareId);
-            return $this->create($venue->response->venue);
-        }
-        return DB::table('places')->where('foursquareId',$foursquareId)->first();
+        return json_encode(DB::table('places')->where('id',$id)->first());
     }
 
     public function getPlaces($lng, $lat)
