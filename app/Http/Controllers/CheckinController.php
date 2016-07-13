@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Checkin;
 use \Auth;
 use \DB;
+use Validator;
 use Debugbar;
 
 class CheckinController extends Controller
@@ -20,17 +21,42 @@ class CheckinController extends Controller
         $this->geolocationController = new GeolocationController();
     }
 
-    public function checkin($id, $latitude, $longitude)
+    public function store(Request $request)
     {
-        $place = json_decode($this->placeController->getPlaceById($id));
-        return $this->create($place, $longitude, $latitude);
+        $expected = [
+            'id',
+            'longitude',
+            'latitude'
+        ];
+
+        $input = $request->only($expected);
+
+        $validator = Validator::make($input, $this->getValidationRules());
+
+        if ($validator->fails())
+        {
+            return $validator->errors();
+        }
+        return $this->create($input);
+
     }
 
-    private function create($place, $longitude, $latitude)
+    private function getValidationRules()
     {
+        return [
+            'id' => 'required',
+            'longitude' => 'required',
+            'latitude' => 'required'
+        ];
+    }
+
+    private function create($input)
+    {
+        $place = json_decode($this->placeController->getPlaceById($input['id']));
+
         try
         {
-            $geoLocation = $this->geolocationController->create($longitude, $latitude);
+            $geoLocation = $this->geolocationController->create($input['longitude'], $input['latitude']);
             $checkin = new Checkin();
             $checkin->placeId = $place->id;
             $checkin->geoId = $geoLocation->id;
