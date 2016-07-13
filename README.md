@@ -57,4 +57,11 @@ $.ajaxSetup({
 ```
 
 ##Routes
+###Places
+```Route::post('/places/add/{name}/{latitude}/{longitude}','PlaceController@addPlace');```
+```Route::get('places/{id}','PlaceController@getPlaceById');```
+```Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');```
 
+###Checkins
+```Route::post('/checkin/{foursquareId}/{latitude}/{longitude}','CheckinController@checkin');```
+```Route::get('/getLatestCheckin','CheckinController@getLatestCheckin');```
