@@ -53,7 +53,7 @@
                 });
 
                 $.ajax({
-                    type: "POST",
+                    type: "PUT",
                     url: '/checkin/1/123/123',
                     dataType : "json",
                     processData:false,
