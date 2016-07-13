@@ -47,18 +47,18 @@ class PlaceController extends Controller
             $place->distance = $meters;
         }
 
-        usort($places, function($a, $z) { return $a->distance > $z->distance; });        
+        usort($places, function($a, $z) { return $a->distance > $z->distance; });
         return $places;
     }
 
-    private function create($venue)
+    private function create($name, $lat, $long)
     {
         //Create a new geolocation for a place
         try
         {
             $geoLocation = new GeoLocation();
-            $geoLocation->latitude = $venue->location->lat;
-            $geoLocation->longitude = $venue->location->lng;
+            $geoLocation->latitude = $lat;
+            $geoLocation->longitude = $long;
             $geoLocation->save();
         } catch (Exception $ex)
         {
@@ -69,10 +69,12 @@ class PlaceController extends Controller
         try
         {
             $place = new Place();
-            $place->foursquareId = $venue->id;
-            $place->name = $venue->name;
+            $place->foursquareId = null;
+            $place->name = $name;
             $place->geoId = $geoLocation->id;
-            return $place->save();
+            $place->save();
+            return json_encode($place);
+
         } catch (Exception $ex)
         {
             return 'We are not able to create a new place.';
