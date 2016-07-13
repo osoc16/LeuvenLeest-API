@@ -58,6 +58,7 @@ $.ajaxSetup({
 
 ##Routes
 ###Places
+Create a new place. You need to send the name, latitude and longitude.
 ```
 Route::post('/places/add/{name}/{latitude}/{longitude}','PlaceController@addPlace');
 ```
