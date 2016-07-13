@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Checkin extends Model
 {
+	protected $fillable = ['geoId'];
 
     public function place(){
     	return $this->belongsTo(Place::class);

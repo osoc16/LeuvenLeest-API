@@ -14,10 +14,10 @@ class CreatePhotosTable extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('placeId',24);
-            $table->foreign('placeId')->references('id')->on('places');
+            $table->integer('placeId')->unsigned();
+            $table->foreign('placeId')->references('id')->on('places')->onDelete('cascade');
             $table->integer('userId')->unsigned();
-            $table->foreign('userId')->references('id')->on('users');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->text('name');
             $table->timestamps();
         });

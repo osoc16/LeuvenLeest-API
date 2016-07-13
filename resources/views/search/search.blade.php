@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Search</title>
+        <title>Laravel</title>
     </head>
     <body>
         <form action="/searching" method="get" accept-charset="UTF-8">

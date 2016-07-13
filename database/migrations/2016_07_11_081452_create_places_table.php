@@ -13,10 +13,10 @@ class CreatePlacesTable extends Migration
     public function up()
     {
         Schema::create('places', function (Blueprint $table) {
-            $table->increment('id');
+            $table->increments('id');
             $table->string('foursquareId',24)->unique();
             $table->integer('geoId')->unsigned();
-            $table->foreign('geoId')->references('id')->on('geolocations');
+            $table->foreign('geoId')->references('id')->on('geolocations')->onDelete('cascade');
             $table->text('name');
             $table->timestamps();
         });

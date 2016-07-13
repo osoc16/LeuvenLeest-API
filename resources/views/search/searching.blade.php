@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Search Results</title>
+        <title>Laravel</title>
     </head>
     <body>
         <pre>

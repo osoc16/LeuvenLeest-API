@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Place extends Model
 {
-    protected $fillable = ['foursquareId','name'];
+    protected $fillable = ['foursquareId','geoId','name'];
     public $incrementing = false;
 
     public function checkins(){
@@ -20,4 +20,10 @@ class Place extends Model
     public function getLocation(){
     	return $this->hasOne(Geolocation::class);
     }
+
+    public $timestamps = false;
+
+
+
+
 }
