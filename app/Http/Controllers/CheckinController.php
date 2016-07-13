@@ -44,11 +44,7 @@ class CheckinController extends Controller
 
     public function getLatestCheckin()
     {
-        $checkin  = DB::table('checkins')->where('userId',Auth::id())->orderBy('created_at', 'DESC')->first();
-        if (!$checkin)
-        {
-            return null;
-        }
-        return $checkin;
+        $checkin  = DB::table('checkins')->where('userId',1)->orderBy('created_at', 'DESC')->first();
+        return json_encode($checkin);
     }
 }
