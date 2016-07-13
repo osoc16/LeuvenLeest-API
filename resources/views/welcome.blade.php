@@ -46,14 +46,6 @@
         </div>
         <script>
             $(function() {
-
-            // $.post('/checkin/54750454498ed14f0c7d12a6/12345/12345', {
-            //         'body': '',
-            //         'discussion': '',
-            //         'id': ''
-            //     })
-
-
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
@@ -62,7 +54,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: '/checkin/54750454498ed14f0c7d12a6/12345/12345',
+                    url: '/checkin/1/123/123',
                     dataType : "json",
                     processData:false,
                     contentType:false,
