@@ -17,7 +17,8 @@ Route::get('/', function () { return view('welcome'); });
 // Search routes
 Route::get('/searching', 'SearchController@searching');
 Route::get('/search', 'SearchController@search');
-Route::get('/places','PlaceController@addPlace');
+Route::get('/places/add','PlaceController@addPlace');
+Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
 
 // Route::get('/', function () {
 //     $response = json_decode(file_get_contents(

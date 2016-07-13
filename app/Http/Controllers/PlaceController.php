@@ -30,6 +30,34 @@ class PlaceController extends Controller
         return DB::table('places')->where('foursquareId',$foursquareId)->first();
     }
 
+    public function getPlaces($lng, $lat)
+    {
+        $places = DB::table('places')
+                    ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
+                    ->get();
+
+        foreach ($places as $place)
+        {
+            // Calculate distance 
+            $lon1 = $lng;
+            $lat1 = $lat;
+
+            $lon2 = $place->longitude;
+            $lat2 = $place->latitude;
+
+            $theta = $lon1 - $lon2;
+            $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            $meters = ($dist * 60 * 1.1515) * 1.609344;
+
+            $place->distance = $meters;
+        }
+
+        usort($places, function($a, $z) { return $a->distance > $z->distance; });        
+        return $places;
+    }
+
     private function create($venue)
     {
         //Create a new geolocation for a place
