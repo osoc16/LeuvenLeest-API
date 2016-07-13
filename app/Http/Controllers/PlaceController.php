@@ -23,7 +23,7 @@ class PlaceController extends Controller
         return json_encode(DB::table('places')->where('id',$id)->first());
     }
 
-    public function getPlaces($lng, $lat)
+    public function getPlaces($lat, $lng)
     {
         $places = DB::table('places')
                     ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
