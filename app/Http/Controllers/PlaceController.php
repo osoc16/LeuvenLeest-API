@@ -31,7 +31,7 @@ class PlaceController extends Controller
 
         foreach ($places as $place)
         {
-            // Calculate distance 
+            // Calculate distance
             $lon1 = $lng;
             $lat1 = $lat;
 
