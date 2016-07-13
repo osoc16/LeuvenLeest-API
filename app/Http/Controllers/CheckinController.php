@@ -20,13 +20,9 @@ class CheckinController extends Controller
         $this->geolocationController = new GeolocationController();
     }
 
-    public function checkin($foursquareId, $longitude, $latitude)
+    public function checkin($id, $latitude, $longitude)
     {
-        if (!$foursquareId || !$longitude || !$latitude)
-        {
-            return 'Forgotten param';
-        }
-        $place = $this->placeController->getPlaceById($foursquareId);
+        $place = json_decode($this->placeController->getPlaceById($id));
         return $this->create($place, $longitude, $latitude);
     }
 
