@@ -11,7 +11,7 @@ Homestead.json
 
 .env
 
-/config
+config
 
 /.vagrant
 /.idea
