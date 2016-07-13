@@ -20,11 +20,11 @@ class CreatePlacesTable extends Migration
             $table->text('name');
             $table->text('address')->nullable();
             $table->longText('description')->nullable();
-            $table->integer('userId')->unsigned();
-            $table->foreign('userId')->references('id')->on('users');
+            $table->integer('userId')->unsigned()->nullable();
+            $table->foreign('userId')->references('id')->on('users')->onDelete('set null');
             $table->string('email')->nullable();
-            $table->integer('categoryId')->unsigned();
-            $table->foreign('categoryId')->references('id')->on('categories');
+            $table->integer('categoryId')->unsigned()->nullable();
+            $table->foreign('categoryId')->references('id')->on('categories')->onDelete('set null');
             $table->string('site')->nullable();
             $table->timestamps();
         });
