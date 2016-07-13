@@ -10,7 +10,7 @@ class Geolocation extends Model
     public $timestamps = false;
 
 	public function place(){
-		return $this->belongsTo('Place');
+		return $this->belongsTo(Place::class);
 	}
 
 	public function checkins(){

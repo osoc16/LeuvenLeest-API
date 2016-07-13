@@ -25,6 +25,10 @@ class User extends Authenticatable
     ];
 
     public function checkins(){
-        $this->hasMany(Checkin::class);
+        return $this->hasMany(Checkin::class);
+    }
+
+    public function places(){
+        return $this->hasMany(Place::class);
     }
 }
