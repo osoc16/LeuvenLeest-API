@@ -9,18 +9,40 @@ use App\Place;
 use App\Providers\FoursquareProvider;
 use Debugbar;
 use \DB;
+use Validator;
 use App\Geolocation;
 
 class PlaceController extends Controller
 {
-    public function addPlace($name, $latitude, $longitude)
+    public function store(Request $request)
     {
-        return $this->create($name, $latitude, $longitude);
+        $expected = [
+            'name',
+            'address',
+            'description',
+            'email',
+            'categoryId',
+            'site',
+            'latitude',
+            'longitude'
+        ];
+
+        $input = $request->only($expected);
+
+        $validator = Validator::make($input, $this->getRulesForValidation());
+
+        if ($validator->fails())
+        {
+            return $validator->errors();
+        }
+        return $this->create($input);
     }
 
     public function getPlaceById($id)
     {
-        return json_encode(DB::table('places')->where('id',$id)->first());
+        return json_encode(DB::table('places')
+            ->where('id',$id)
+            ->first());
     }
 
     public function getPlaces($lat, $lng)
@@ -51,14 +73,14 @@ class PlaceController extends Controller
         return $places;
     }
 
-    private function create($name, $lat, $long)
+    private function create($input)
     {
         //Create a new geolocation for a place
         try
         {
             $geoLocation = new GeoLocation();
-            $geoLocation->latitude = $lat;
-            $geoLocation->longitude = $long;
+            $geoLocation->latitude = $input['latitude'];
+            $geoLocation->longitude = $input['longitude'];
             $geoLocation->save();
         } catch (Exception $ex)
         {
@@ -70,14 +92,33 @@ class PlaceController extends Controller
         {
             $place = new Place();
             $place->foursquareId = null;
-            $place->name = $name;
-            $place->geoId = $geoLocation->id;
+            $place->name = $input['name'];
+            $place->address = $input['address'];
+            $place->description = $input['description'];
+            $place->email = $input['email'];
+            $place->categoryId = $input['categoryId'];
+            $place->site = $input['site'];
+            $place->geoId = $geoLocation['id'];
             $place->save();
-            return json_encode($place);
+            return $place;
 
         } catch (Exception $ex)
         {
             return 'We are not able to create a new place.';
         }
+    }
+
+    private function getRulesForValidation()
+    {
+        return [
+            'name' => 'required',
+            'address' => '',
+            'description' => '',
+            'email' => 'required',
+            'categoryId' => 'required',
+            'site' => '',
+            'latitude' => 'required',
+            'longitude' => 'required'
+        ];
     }
 }
