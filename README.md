@@ -39,7 +39,7 @@ $.ajaxSetup({
 });
 
 $.ajax({
-    type: "POST",
+    type: "PUT",
     url: '/checkin/54750454498ed14f0c7d12a6/12345/12345',
     dataType : "json",
     processData:false,
@@ -59,7 +59,7 @@ $.ajax({
 ###Places
 Create a new place. You need to send the name, latitude and longitude.
 ```
-Route::post('/places/add/{name}/{latitude}/{longitude}','PlaceController@addPlace');
+Route::put('/places/add/{name}/{latitude}/{longitude}','PlaceController@addPlace');
 ```
 ```
 Route::get('places/{id}','PlaceController@getPlaceById');
@@ -69,7 +69,7 @@ Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
 ```
 ###Checkins
 ```
-Route::post('/checkin/{foursquareId}/{latitude}/{longitude}','CheckinController@checkin');
+Route::put('/checkin/{foursquareId}/{latitude}/{longitude}','CheckinController@checkin');
 ```
 ```
 Route::get('/getLatestCheckin','CheckinController@getLatestCheckin');
