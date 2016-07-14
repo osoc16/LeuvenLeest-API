@@ -25,7 +25,7 @@ Route::get('auth/logout', 'Auth\AuthController@logout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-//oAuth routes
+// oAuth routes
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
 Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
@@ -41,4 +41,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::put('/checkin','CheckinController@store');
     Route::get('/checkin/latest','CheckinController@getLatestCheckin');
     Route::get('/checkin/recent','CheckinController@getRecentCheckins');
+
+    // Users
+    Route::get('/user/get/{id}','UserController@getUserById');
 });
