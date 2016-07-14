@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use \Auth;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use \JWTAuth;
 
 class AuthController extends Controller
 {
@@ -80,14 +81,14 @@ class AuthController extends Controller
 
     public function postLogin(Request $request){
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')],true)){
-            return redirect($this->redirectTo);
+            return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
         }
         return 'wrong logindata';
     }
 
     public function logout(){
         if(Auth::check()){
-            Auth::logout();            
+            Auth::logout();
         }
         return redirect($this->redirectTo);
     }
@@ -116,11 +117,11 @@ class AuthController extends Controller
             $this->create([ 'name' => $user->name,
                     'email' => $user->email,
                     'password' => $pass, ]);
-        }  
+        }
 
-        Auth::attempt(['email' => $user->email, 'password' => $pass], true);
+        $user = Auth::attempt(['email' => $user->email, 'password' => $pass], true);
 
-        return redirect($this->redirectTo);
+        return ['oAuth_token' => JWTAuth::fromUser($user)];
     }
 
     public function getRegister(){
@@ -128,7 +129,7 @@ class AuthController extends Controller
     }
 
     public function postRegister(Request $request){
-        $validator = $this->validator($request);
+        $validator = $this->validator($request->all());
 
         if($validator->fails()){
             return redirect('/auth/register')
@@ -145,7 +146,8 @@ class AuthController extends Controller
             'email' => $email,
             'password' => $password,
             ])){
-            return redirect($redirectTo);
+        return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
+
         }
     }
 }

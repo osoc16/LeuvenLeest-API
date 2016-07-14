@@ -12,7 +12,7 @@
 */
 
 
-Route::get('/', function () { 
+Route::get('/', function () {
 	return view('welcome');
 });
 
@@ -29,13 +29,16 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
 Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
-//Place
-Route::put('/places/add','PlaceController@store');
-Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
-Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
-Route::get('/places/{id}','PlaceController@getPlaceById');
 
-//Checkin
-Route::put('/checkin','CheckinController@store');
-Route::get('/checkin/latest','CheckinController@getLatestCheckin');
-Route::get('/checkin/recent','CheckinController@getRecentCheckins');
+Route::group(['middleware' => ['jwt.auth']], function () {
+    //Place
+    Route::put('/places/add','PlaceController@store');
+    Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
+    Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
+    Route::get('/places/{id}','PlaceController@getPlaceById');
+
+    //Checkin
+    Route::put('/checkin','CheckinController@store');
+    Route::get('/checkin/latest','CheckinController@getLatestCheckin');
+    Route::get('/checkin/recent','CheckinController@getRecentCheckins');
+});
