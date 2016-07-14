@@ -22,4 +22,5 @@ Route::get('/places/{id}','PlaceController@getPlaceById');
 
 //Checkin
 Route::put('/checkin','CheckinController@store');
-Route::get('/getLatestCheckin','CheckinController@getLatestCheckin');
+Route::get('/checkin/latest','CheckinController@getLatestCheckin');
+Route::get('/checkin/recent','CheckinController@getRecentCheckins');

@@ -73,4 +73,17 @@ class CheckinController extends Controller
         $checkin  = DB::table('checkins')->where('userId',1)->orderBy('created_at', 'DESC')->first();
         return json_encode($checkin);
     }
+
+    public function getRecentCheckins()
+    {
+        $places = DB::table('checkins')
+            ->join('places','checkins.placeId','=','places.id')
+                        ->where('checkins.userId', 1)
+
+            ->select('places.*')
+            ->orderBy('checkins.updated_at', 'DESC')
+            ->take(6)
+            ->get();
+        return $places;
+    }
 }
