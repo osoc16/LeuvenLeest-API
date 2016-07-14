@@ -141,13 +141,14 @@ class AuthController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-        if($this->create([
+        $user = $this->create([
             'name' => $name,
             'email' => $email,
             'password' => $password,
-            ])){
-        return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
+            ]);
 
+        if($user){
+            return ['oAuth_token' => JWTAuth::fromUser($user)];
         }
     }
 }
