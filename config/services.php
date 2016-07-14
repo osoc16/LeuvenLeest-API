@@ -38,12 +38,12 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_KEY'),
-        'redirect' => 'http://dev.boekdelen.com/auth/loginCallback/fb'
+        'redirect' => 'http://95.85.15.210/auth/loginCallback/fb'
     ],
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://dev.boekdelen.com/auth/loginCallback/google'
+        'redirect' => 'http://95.85.15.210/auth/loginCallback/google'
     ],
 
 ];
