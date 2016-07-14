@@ -48,9 +48,24 @@ class PlaceController extends Controller
     public function getPlaces($lat, $lng)
     {
         $places = DB::table('places')
-                    ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
-                    ->get();
+            ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
+            ->get();
 
+        return $this->sortByDistance($places, $lat, $lng);
+    }
+
+    public function getPlacesByCategory($categoryId, $lat, $lng)
+    {
+        $places = DB::table('categories')
+            ->join('places', 'places.categoryId', '=', 'categories.id')
+            ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
+            ->where('places.categoryId', $categoryId)->get();        
+
+        return json_encode($this->sortByDistance($places, $lat, $lng));
+    }
+
+    private function sortByDistance($places, $lat, $lng)
+    {
         foreach ($places as $place)
         {
             // Calculate distance

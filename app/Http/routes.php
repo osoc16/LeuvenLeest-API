@@ -16,8 +16,9 @@ Route::get('/', function () { return view('welcome'); });
 
 //Place
 Route::put('/places/add','PlaceController@store');
-Route::get('places/{id}','PlaceController@getPlaceById');
+Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
 Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
+Route::get('/places/{id}','PlaceController@getPlaceById');
 
 //Checkin
 Route::put('/checkin','CheckinController@store');
