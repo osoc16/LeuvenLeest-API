@@ -12,7 +12,22 @@
 */
 
 
-Route::get('/', function () { return view('welcome'); });
+Route::get('/', function () { 
+	return view('welcome');
+});
+
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@logout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+//oAuth routes
+Route::get('auth/login/{client}', 'Auth\AuthController@login');
+Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
 //Place
 Route::put('/places/add','PlaceController@store');

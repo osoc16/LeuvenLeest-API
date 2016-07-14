@@ -36,11 +36,23 @@
         </style>
     </head>
     <body>
-<meta content="{{ csrf_token() }}" name="_token">
 
         <div class="container">
             <div class="content">
                 <div class="title">Laravel 5</div>
+                <div class="title">LeuvenLeest</div>
+                    @if (Auth::check()) 
+                    Welcome back, {{ Auth::user()->name }} <a href="{{ url('auth/logout') }}"> logout</a>
+                    @else
+                    Hi guest 
+                    <br/>
+                    
+                    <a href="auth/login/fb" ><img src="img/facebook-login-blue.png" alt="facebook login button" /></a>
+                    <br/>
+                    <a href="auth/login/google" ><img src="img/google-login.png" alt="google login button" /></a>
+                    <br/>
+                    <a href="auth/login"><img src="img/login-button.jpg" alt="login button"></a>
+                    @endif
             </div>
         </div>
     </body>
