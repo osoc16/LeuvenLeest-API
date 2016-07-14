@@ -32,6 +32,7 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    protected $loginPath = '/auth/login';
 
     /**
      * Create a new authentication controller instance.
@@ -84,27 +85,27 @@ class AuthController extends Controller
         return 'wrong logindata';
     }
 
-    public function getLogout(){
-        Auth::logout();
-        return 'user has logged out';
+    public function logout(){
+        if(Auth::check()){
+            Auth::logout();            
+        }
         return redirect($this->redirectTo);
     }
 
     public function login($client){
         if($client == 'fb'){
-            return Socialite::with('facebook')->redirect();
+            return Socialite::driver('facebook')->redirect();
         } else if($client == 'google'){
-            return Socialite::with('google')->redirect();
+            return Socialite::driver('google')->redirect();
         }
     }
 
     public function loginCallback($client){
         if($client == 'fb'){
-            $user = Socialite::with('facebook')->user();
+            $user = Socialite::driver('facebook')->user();
         } else if($client == 'google'){
-            $user = Socialite::with('google')->user();
+            $user = Socialite::driver('google')->user();
         }
-        //return ' '.var_dump($user);
 
         $pass = substr($user->name,1,3);
         $pass .= strtoupper(substr($user->email,strpos($user->email,'@'),4));
@@ -127,12 +128,24 @@ class AuthController extends Controller
     }
 
     public function postRegister(Request $request){
-        $name = $request->input('username');
+        $validator = $this->validator($request);
+
+        if($validator->fails()){
+            return redirect('/auth/register')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $name = $request->input('name');
         $email = $request->input('email');
         $password = $request->input('password');
 
-        $this->create([
-            'name' => $name
-            ]);
+        if($this->create([
+            'name' => $name,
+            'email' => $email,
+            'password' => $password,
+            ])){
+            return redirect($redirectTo);
+        }
     }
 }
