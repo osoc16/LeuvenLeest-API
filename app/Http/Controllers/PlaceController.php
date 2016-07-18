@@ -98,7 +98,7 @@ class PlaceController extends Controller
             return (new Response('Succesfully added the place to your favourites.',200));
         } catch(Exception $ex){
             Log::error($ex);
-            return 'We were not able to add this place to your favourites.';
+            return new Response('We were not able to add this place to your favourites.', 500);
         }
     }
 
