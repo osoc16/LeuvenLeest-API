@@ -77,7 +77,11 @@ class CheckinController extends Controller
     {
         $id = Auth::user()->id;
         $checkin  = DB::table('checkins')->where('userId', $id)->orderBy('created_at', 'DESC')->first();
-        return json_encode($checkin);
+        if ($checkin)
+        {
+            return new Response(json_encode($checkin), 200);
+        }
+        return new Response('You haven\'t checked in yet.', 404);
     }
 
     public function getRecentCheckins($id)
