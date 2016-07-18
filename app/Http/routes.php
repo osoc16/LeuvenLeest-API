@@ -11,35 +11,36 @@
 |
 */
 
+Route::group(['middleware' => ['cors']], function () {
+    Route::get('/', function () {
+    	return view('welcome');
+    });
 
-Route::get('/', function () {
-	return view('welcome');
-});
+    // Authentication routes...
+    Route::post('auth/login', 'Auth\AuthController@postLogin');
+    Route::get('auth/logout', 'Auth\AuthController@logout');
 
-// Authentication routes...
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@logout');
+    // Registration routes...
+    Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-// Registration routes...
-Route::post('auth/register', 'Auth\AuthController@postRegister');
-
-// oAuth routes
-Route::get('auth/login/{client}', 'Auth\AuthController@login');
-Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
+    // oAuth routes
+    Route::get('auth/login/{client}', 'Auth\AuthController@login');
+    Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
 
-Route::group(['middleware' => ['jwt.auth']], function () {
-    //Place
-    Route::put('/places/add','PlaceController@store');
-    Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
-    Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
-    Route::get('/places/{id}','PlaceController@getPlaceById');
+    Route::group(['middleware' => ['jwt.auth']], function () {
+        //Place
+        Route::put('/places/add','PlaceController@store');
+        Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
+        Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
+        Route::get('/places/{id}','PlaceController@getPlaceById');
 
-    //Checkin
-    Route::put('/checkin','CheckinController@store');
-    Route::get('/checkin/latest','CheckinController@getLatestCheckin');
-    Route::get('/checkin/recent','CheckinController@getRecentCheckins');
+        //Checkin
+        Route::put('/checkin','CheckinController@store');
+        Route::get('/checkin/latest','CheckinController@getLatestCheckin');
+        Route::get('/checkin/recent','CheckinController@getRecentCheckins');
 
-    // Users
-    Route::get('/user/get/{id}','UserController@getUserById');
+        // Users
+        Route::get('/user/get/{id}','UserController@getUserById');
+    });
 });
