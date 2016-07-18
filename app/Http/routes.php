@@ -17,7 +17,7 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorizatio
 
 
 Route::get('/', function () {
-	return view('welcome');
+    return view('welcome');
 });
 
 // Authentication routes...
