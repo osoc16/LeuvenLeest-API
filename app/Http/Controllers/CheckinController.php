@@ -52,11 +52,13 @@ class CheckinController extends Controller
 
     private function create($input)
     {
-        $place = json_decode($this->placeController->getPlaceById($input['id']));
+        $place = DB::table('places')
+            ->where('id',$input['id'])
+            ->first();
 
         if (!$place)
         {
-            return new Response('We weren\'t able to find the place', 500);
+            return new Response('We weren\'t able to find the place', 404);
         }
 
         try
