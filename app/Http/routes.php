@@ -37,7 +37,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
     Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
     Route::get('/places/{id}','PlaceController@getPlaceById');
-    Route::get('/places/trending/{lat}/{long}', 'PlaceController@getTrendingPlaces');
+    Route::get('/places/trending', 'PlaceController@getTrendingPlaces');
     Route::post('/places/{id}/addToFavourites','PlaceController@addToFavourites');
     Route::post('/places/{id}/removeFromFavourites','PlaceController@removeFromFavourites');
 

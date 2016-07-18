@@ -64,7 +64,7 @@ class PlaceController extends Controller
         return json_encode($this->sortByDistance($places, $lat, $lng));
     }
 
-    public function getTrendingPlaces($lat, $long)
+    public function getTrendingPlaces()
     {
         $places = DB::table('checkins')
             ->join('places', 'places.id', '=', 'checkins.placeId')
