@@ -59,7 +59,7 @@ class PlaceController extends Controller
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->get();
 
-        return $this->sortByDistance($places, $lat, $lng);
+        return new Response($this->sortByDistance($places, $lat, $lng), 200);
     }
 
     public function getPlacesByCategory($categoryId, $lat, $lng)
