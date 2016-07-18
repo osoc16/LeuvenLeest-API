@@ -10,15 +10,15 @@ class Place extends Model
     public $timestamps = true;
 
     public function checkins(){
-    	return $this->hasMany(Checkin::class);
+        return $this->hasMany(Checkin::class);
     }
 
     public function photos(){
-    	return $this->hasMany(Photo::class);
+        return $this->hasMany(Photo::class);
     }
 
     public function getLocation(){
-    	return $this->hasOne(Geolocation::class);
+        return $this->hasOne(Geolocation::class);
     }
 
     public function createdBy(){

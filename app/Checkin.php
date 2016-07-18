@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Checkin extends Model
 {
-	protected $fillable = ['geoId'];
+    protected $fillable = ['geoId'];
 
     public function place(){
-    	return $this->belongsTo(Place::class);
+        return $this->belongsTo(Place::class);
     }
 
     public function user(){
-    	return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function getLocation(){
-    	return $this->hasOne(Geolocation::class);
+        return $this->hasOne(Geolocation::class);
     }
 }
