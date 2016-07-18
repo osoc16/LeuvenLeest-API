@@ -70,7 +70,7 @@ class CheckinController extends Controller
         } catch(Exception $ex) {
             return new Response('We weren\'t able to create a new place.', 500);
         }
-        return $checkin;
+        return new Response(json_encode($checkin), 201);
     }
 
     public function getLatestCheckin($id)
