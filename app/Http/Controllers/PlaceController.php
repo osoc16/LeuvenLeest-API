@@ -82,7 +82,7 @@ class PlaceController extends Controller
             ->orderBy('checkin_count', 'DESC')
             ->take(5)
             ->get();
-            return json_encode($places);
+            return new Response($places, 200);
     }
 
     public function addToFavourites($id){
