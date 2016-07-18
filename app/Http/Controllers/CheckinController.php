@@ -8,6 +8,7 @@ use App\Checkin;
 use \Auth;
 use \DB;
 use Validator;
+use Illuminate\Http\Response;
 
 class CheckinController extends Controller
 {
@@ -53,36 +54,52 @@ class CheckinController extends Controller
     {
         $place = json_decode($this->placeController->getPlaceById($input['id']));
 
+        if (!$place)
+        {
+            return new Response('We weren\'t able to find the place', 500);
+        }
+
         try
         {
             $geoLocation = $this->geolocationController->create($input['longitude'], $input['latitude']);
             $checkin = new Checkin();
             $checkin->placeId = $place->id;
             $checkin->geoId = $geoLocation->id;
-            $checkin->userId = 1;
+            $checkin->userId = Auth::user()->id;
             $checkin->save();
         } catch(Exception $ex) {
-            throw new Exception('Error');
+            return new Response('We weren\'t able to create a new place.', 500);
         }
-        return $checkin;
+        return new Response(json_encode($checkin), 201);
     }
 
-    public function getLatestCheckin($id)
+    public function getLatestCheckin()
     {
+        $id = Auth::user()->id;
         $checkin  = DB::table('checkins')->where('userId', $id)->orderBy('created_at', 'DESC')->first();
-        return json_encode($checkin);
+        if ($checkin)
+        {
+            return new Response(json_encode($checkin), 200);
+        }
+        return new Response('You haven\'t checked in yet.', 404);
     }
 
-    public function getRecentCheckins($id)
+    public function getRecentCheckins()
     {
+        $id = Auth::user()->id;
         $places = DB::table('checkins')
             ->join('places','checkins.placeId','=','places.id')
                         ->where('checkins.userId', $id)
 
             ->select('places.*')
+            ->groupBy('places.id')
             ->orderBy('checkins.updated_at', 'DESC')
             ->take(6)
             ->get();
-        return $places;
+        if ($places)
+        {
+            return new Response($places, 200);
+        }
+        return new Response('You haven\'t checked in yet', 404);
     }
 }

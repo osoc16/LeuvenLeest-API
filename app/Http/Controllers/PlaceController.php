@@ -11,6 +11,8 @@ use \DB;
 use Validator;
 use App\Geolocation;
 use Carbon\Carbon;
+use Auth;
+use Illuminate\Http\Response;
 
 class PlaceController extends Controller
 {
@@ -40,9 +42,15 @@ class PlaceController extends Controller
 
     public function getPlaceById($id)
     {
-        return json_encode(DB::table('places')
+        $place = DB::table('places')
             ->where('id',$id)
-            ->first());
+            ->first();
+        if ($place)
+        {
+            $place = json_encode($place);
+            return new Response($place, 200);
+        }
+        return new Response('Place not found', 404);
     }
 
     public function getPlaces($lat, $lng)
@@ -51,7 +59,7 @@ class PlaceController extends Controller
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->get();
 
-        return $this->sortByDistance($places, $lat, $lng);
+        return new Response($this->sortByDistance($places, $lat, $lng), 200);
     }
 
     public function getPlacesByCategory($categoryId, $lat, $lng)
@@ -61,7 +69,7 @@ class PlaceController extends Controller
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->where('places.categoryId', $categoryId)->get();
 
-        return json_encode($this->sortByDistance($places, $lat, $lng));
+        return new Response($this->sortByDistance($places, $lat, $lng), 200);
     }
 
     public function getTrendingPlaces()
@@ -74,13 +82,13 @@ class PlaceController extends Controller
             ->orderBy('checkin_count', 'DESC')
             ->take(5)
             ->get();
-            return json_encode($places);
+            return new Response($places, 200);
     }
 
     public function addToFavourites($id){
         try{
             $user = Auth::user();
-            $place = App\Place::find($id);
+            $place = Place::find($id);
             $place->isFavouriteFrom()->attach($user);
             $place->save();
             return (new Response('Succesfully added the place to your favourites.',200));
@@ -138,7 +146,7 @@ class PlaceController extends Controller
             $geoLocation->save();
         } catch (Exception $ex)
         {
-            return 'We are not able to create a new geolocation.';
+            return new Response('We are not able to create a new geolocation.', 500);
         }
 
         //Create a new place
@@ -154,11 +162,11 @@ class PlaceController extends Controller
             $place->site = $input['site'];
             $place->geoId = $geoLocation['id'];
             $place->save();
-            return $place;
+            return new Response(json_encode($place), 201);
 
         } catch (Exception $ex)
         {
-            return 'We are not able to create a new place.';
+            return new Response('We are not able to create a new place.', 500);
         }
     }
 
