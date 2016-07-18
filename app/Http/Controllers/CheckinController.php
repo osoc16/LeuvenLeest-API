@@ -54,6 +54,11 @@ class CheckinController extends Controller
     {
         $place = json_decode($this->placeController->getPlaceById($input['id']));
 
+        if (!$place)
+        {
+            return new Response('We weren\'t able to find the place', 500);
+        }
+
         try
         {
             $geoLocation = $this->geolocationController->create($input['longitude'], $input['latitude']);
