@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-header('Access-Control-Allow-Origin: http://95.85.15.210');
+header('Access-Control-Allow-Origin: http://localhost:8000');
 Route::get('/', function () {
 	return view('welcome');
 });
