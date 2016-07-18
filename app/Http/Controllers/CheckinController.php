@@ -84,8 +84,9 @@ class CheckinController extends Controller
         return new Response('You haven\'t checked in yet.', 404);
     }
 
-    public function getRecentCheckins($id)
+    public function getRecentCheckins()
     {
+        $id = Auth::user()->id;
         $places = DB::table('checkins')
             ->join('places','checkins.placeId','=','places.id')
                         ->where('checkins.userId', $id)
