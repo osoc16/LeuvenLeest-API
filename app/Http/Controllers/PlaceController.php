@@ -162,7 +162,7 @@ class PlaceController extends Controller
             $place->site = $input['site'];
             $place->geoId = $geoLocation['id'];
             $place->save();
-            return $place;
+            return new Response(json_encode($place), 201);
 
         } catch (Exception $ex)
         {
