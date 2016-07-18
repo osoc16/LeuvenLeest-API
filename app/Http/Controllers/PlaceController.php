@@ -11,6 +11,8 @@ use \DB;
 use Validator;
 use App\Geolocation;
 use Carbon\Carbon;
+use Auth;
+use Illuminate\Http\Response;
 
 class PlaceController extends Controller
 {
@@ -40,9 +42,15 @@ class PlaceController extends Controller
 
     public function getPlaceById($id)
     {
-        return json_encode(DB::table('places')
+        $place = DB::table('places')
             ->where('id',$id)
-            ->first());
+            ->first();
+        if ($place)
+        {
+            $place = json_encode($place);
+            return new Response($place, 200);
+        }
+        return new Response('Place not found', 404);
     }
 
     public function getPlaces($lat, $lng)
