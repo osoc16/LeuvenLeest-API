@@ -31,4 +31,8 @@ class User extends Authenticatable
     public function places(){
         return $this->hasMany(Place::class);
     }
+
+    public function favourites(){
+        return $this->hasMany('App\Place','favourites','placeId','userId')->withTimestamps();
+    }
 }

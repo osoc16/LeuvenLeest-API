@@ -75,10 +75,6 @@ class AuthController extends Controller
         ]);
     }
 
-    public function getLogin(){
-        return view('auth.login');
-    }
-
     public function postLogin(Request $request){
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')],true)){
             return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
@@ -122,10 +118,6 @@ class AuthController extends Controller
         $user = Auth::attempt(['email' => $user->email, 'password' => $pass], true);
 
         return ['oAuth_token' => JWTAuth::fromUser($user)];
-    }
-
-    public function getRegister(){
-        return view('auth.register');
     }
 
     public function postRegister(Request $request){

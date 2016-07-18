@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -21,7 +22,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('auth/logout', 'Auth\AuthController@logout');
 
     // Registration routes...
-    Route::post('auth/register', 'Auth\AuthController@postRegister');
+    Route::put('auth/register', 'Auth\AuthController@postRegister');
 
     // oAuth routes
     Route::get('auth/login/{client}', 'Auth\AuthController@login');
@@ -34,6 +35,8 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
         Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
         Route::get('/places/{id}','PlaceController@getPlaceById');
+    Route::post('/places/{id}/addToFavourites','PlaceController@addToFavourites');
+    Route::post('/places/{id}/removeFromFavourites','PlaceController@removeFromFavourites');
 
         //Checkin
         Route::put('/checkin','CheckinController@store');
@@ -43,4 +46,3 @@ Route::group(['middleware' => ['cors']], function () {
         // Users
         Route::get('/user/get/{id}','UserController@getUserById');
     });
-});
