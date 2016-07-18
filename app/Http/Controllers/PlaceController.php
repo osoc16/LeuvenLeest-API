@@ -89,6 +89,10 @@ class PlaceController extends Controller
         try{
             $user = Auth::user();
             $place = Place::find($id);
+            if (!$place)
+            {
+                return Response('We weren\'t able to find the place', 404);
+            }
             $place->isFavouriteFrom()->attach($user);
             $place->save();
             return (new Response('Succesfully added the place to your favourites.',200));
