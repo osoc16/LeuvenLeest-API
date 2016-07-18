@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Place;
 use App\Providers\FoursquareProvider;
-use Debugbar;
 use \DB;
 use Validator;
 use App\Geolocation;
@@ -72,6 +71,31 @@ class PlaceController extends Controller
             ->count('checkins.placeId');
 
             return $places;
+
+    public function addToFavourites($id){
+        try{
+            $user = Auth::user();
+            $place = App\Place::find($id);
+            $place->isFavouriteFrom()->attach($user);
+            $place->save();
+            return (new Response('Succesfully added the place to your favourites.',200));
+        } catch(Exception $ex){
+            Log::error($ex);
+            return 'We were not able to add this place to your favourites.';
+        }
+    }
+
+    public function removeFromFavourites($id){
+        try {
+            $user = Auth::user();
+            $place = App\Place::find($id);
+            $place->isFavouriteFrom()->detach($user);
+            $place->save();
+            return (new Response('Successfully removed the place from your favourites.',200));
+        } catch (Exception $ex){
+            Log::error($ex);
+            return 'We were not able to remove this place from you favourites.';
+        }
     }
 
     private function sortByDistance($places, $lat, $lng)

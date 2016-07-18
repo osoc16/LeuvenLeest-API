@@ -8,7 +8,6 @@ use App\Checkin;
 use \Auth;
 use \DB;
 use Validator;
-use Debugbar;
 
 class CheckinController extends Controller
 {
@@ -50,7 +49,7 @@ class CheckinController extends Controller
         ];
     }
 
-    private function create($input)
+    private function create($input, $id)
     {
         $place = json_decode($this->placeController->getPlaceById($input['id']));
 
@@ -68,17 +67,17 @@ class CheckinController extends Controller
         return $checkin;
     }
 
-    public function getLatestCheckin()
+    public function getLatestCheckin($id)
     {
-        $checkin  = DB::table('checkins')->where('userId',1)->orderBy('created_at', 'DESC')->first();
+        $checkin  = DB::table('checkins')->where('userId', $id)->orderBy('created_at', 'DESC')->first();
         return json_encode($checkin);
     }
 
-    public function getRecentCheckins()
+    public function getRecentCheckins($id)
     {
         $places = DB::table('checkins')
             ->join('places','checkins.placeId','=','places.id')
-                        ->where('checkins.userId', 1)
+                        ->where('checkins.userId', $id)
 
             ->select('places.*')
             ->orderBy('checkins.updated_at', 'DESC')

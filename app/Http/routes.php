@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,6 +11,9 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+header('Access-Control-Allow-Origin: http://localhost:8000');
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
 
 
 Route::get('/', function () {
@@ -21,12 +25,11 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@logout');
 
 // Registration routes...
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::put('/auth/register', 'Auth\AuthController@postRegister');
 
 // oAuth routes
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
 Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
-
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     //Place
@@ -35,11 +38,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
     Route::get('/places/{id}','PlaceController@getPlaceById');
     Route::get('/places/trending/{lat}/{long}', 'PlaceController@getTrendingPlaces');
+    Route::post('/places/{id}/addToFavourites','PlaceController@addToFavourites');
+    Route::post('/places/{id}/removeFromFavourites','PlaceController@removeFromFavourites');
 
     //Checkin
     Route::put('/checkin','CheckinController@store');
-    Route::get('/checkin/latest','CheckinController@getLatestCheckin');
-    Route::get('/checkin/recent','CheckinController@getRecentCheckins');
+    Route::get('/checkin/latest/{id}','CheckinController@getLatestCheckin');
+    Route::get('/checkin/recent/{id}','CheckinController@getRecentCheckins');
 
     // Users
     Route::get('/user/get/{id}','UserController@getUserById');

@@ -28,4 +28,8 @@ class Place extends Model
     public function getCategory(){
         return $this->belongsTo(Category::class);
     }
+
+    public function isFavouriteFrom(){
+        return $this->belongsToMany('App\User','favourites','placeId','userId')->withTimestamps();
+    }
 }
