@@ -105,7 +105,11 @@ class PlaceController extends Controller
     public function removeFromFavourites($id){
         try {
             $user = Auth::user();
-            $place = App\Place::find($id);
+            $place = Place::find($id);
+            if (!$place)
+            {
+                return new Response('We weren\'t able to find the place', 404);
+            }
             $place->isFavouriteFrom()->detach($user);
             $place->save();
             return (new Response('Successfully removed the place from your favourites.',200));
