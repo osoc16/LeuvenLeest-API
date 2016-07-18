@@ -83,7 +83,7 @@ class PlaceController extends Controller
             $place = App\Place::find($id);
             $place->isFavouriteFrom()->detach($user);
             $place->save();
-            return (new Response('Successfully removed the place from your favourites.',200))
+            return (new Response('Successfully removed the place from your favourites.',200));
         } catch (Exception $ex){
             Log::error($ex);
             return 'We were not able to remove this place from you favourites.';
