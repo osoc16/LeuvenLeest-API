@@ -40,8 +40,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
     //Checkin
     Route::put('/checkin','CheckinController@store');
-    Route::get('/checkin/latest','CheckinController@getLatestCheckin');
-    Route::get('/checkin/recent','CheckinController@getRecentCheckins');
+    Route::get('/checkin/latest/{id}','CheckinController@getLatestCheckin');
+    Route::get('/checkin/recent/{id}','CheckinController@getRecentCheckins');
 
     // Users
     Route::get('/user/get/{id}','UserController@getUserById');

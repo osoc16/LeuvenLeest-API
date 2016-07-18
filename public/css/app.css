@@ -1,0 +1,23 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 150%; }
+
+#content {
+  width: 1140px;
+  margin: 0 auto 500px; }
+  #content h1 {
+    margin: 100px 0;
+    width: 100%;
+    font-size: 4rem;
+    text-align: center;
+    font-family: Lato, Arial, sans-serif; }
+
+p.quote {
+  background: #ebebeb;
+  border-radius: 10px;
+  padding: 20px;
+  font-family: Courier, Arial, serif; }
+  p.quote strong {
+    color: red; }
+
+/*# sourceMappingURL=app.css.map */
