@@ -124,9 +124,7 @@ class AuthController extends Controller
         $validator = $this->validator($request->all());
 
         if($validator->fails()){
-            return redirect('/auth/register')
-                ->withErrors($validator)
-                ->withInput();
+            return $validator->errors();
         }
 
         $name = $request->input('name');
