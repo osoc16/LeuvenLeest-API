@@ -49,7 +49,7 @@ class CheckinController extends Controller
         ];
     }
 
-    private function create($input, $id)
+    private function create($input)
     {
         $place = json_decode($this->placeController->getPlaceById($input['id']));
 
