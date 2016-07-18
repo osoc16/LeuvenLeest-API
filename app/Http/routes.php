@@ -21,7 +21,7 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@logout');
 
 // Registration routes...
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::put('auth/register', 'Auth\AuthController@postRegister');
 
 // oAuth routes
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
