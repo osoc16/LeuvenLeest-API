@@ -92,6 +92,7 @@ class CheckinController extends Controller
                         ->where('checkins.userId', $id)
 
             ->select('places.*')
+            ->groupBy('places.id')
             ->orderBy('checkins.updated_at', 'DESC')
             ->take(6)
             ->get();
