@@ -52,7 +52,9 @@ class CheckinController extends Controller
 
     private function create($input)
     {
-        $place = json_decode($this->placeController->getPlaceById($input['id']));
+        $place = DB::table('places')
+            ->where('id',$input['id'])
+            ->first();
 
         if (!$place)
         {
