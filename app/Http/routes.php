@@ -12,7 +12,7 @@
 */
 header('Access-Control-Allow-Origin: http://localhost:8000');
 header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
+header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
 
 
 Route::get('/', function () {
@@ -24,7 +24,7 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@logout');
 
 // Registration routes...
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::put('/auth/register', 'Auth\AuthController@postRegister');
 
 // oAuth routes
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
