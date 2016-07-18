@@ -166,7 +166,7 @@ class PlaceController extends Controller
 
         } catch (Exception $ex)
         {
-            return 'We are not able to create a new place.';
+            return new Response('We are not able to create a new place.', 500);
         }
     }
 
