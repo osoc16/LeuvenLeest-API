@@ -58,7 +58,7 @@ class CheckinController extends Controller
 
         if (!$place)
         {
-            return new Response('We weren\'t able to find the place', 500);
+            return new Response('We weren\'t able to find the place', 404);
         }
 
         try
