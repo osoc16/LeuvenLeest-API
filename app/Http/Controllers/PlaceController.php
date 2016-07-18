@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Place;
 use App\Providers\FoursquareProvider;
-use Debugbar;
 use \DB;
 use Validator;
 use App\Geolocation;
@@ -59,7 +58,7 @@ class PlaceController extends Controller
         $places = DB::table('categories')
             ->join('places', 'places.categoryId', '=', 'categories.id')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
-            ->where('places.categoryId', $categoryId)->get();        
+            ->where('places.categoryId', $categoryId)->get();
 
         return json_encode($this->sortByDistance($places, $lat, $lng));
     }
