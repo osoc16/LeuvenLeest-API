@@ -59,7 +59,7 @@ class CheckinController extends Controller
             $checkin = new Checkin();
             $checkin->placeId = $place->id;
             $checkin->geoId = $geoLocation->id;
-            $checkin->userId = 1;
+            $checkin->userId = Auth::user()->id;
             $checkin->save();
         } catch(Exception $ex) {
             throw new Exception('Error');
