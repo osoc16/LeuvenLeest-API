@@ -59,9 +59,19 @@ class PlaceController extends Controller
         $places = DB::table('categories')
             ->join('places', 'places.categoryId', '=', 'categories.id')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
-            ->where('places.categoryId', $categoryId)->get();        
+            ->where('places.categoryId', $categoryId)->get();
 
         return json_encode($this->sortByDistance($places, $lat, $lng));
+    }
+
+    public function getTrendingPlaces($lat, $long)
+    {
+        $places = DB::table('checkins')
+            ->join('places', 'places.id', '=', 'checkins.placeId')
+            ->groupBy('checkins.placeId')
+            ->count('checkins.placeId');
+
+            return $places;
     }
 
     private function sortByDistance($places, $lat, $lng)
