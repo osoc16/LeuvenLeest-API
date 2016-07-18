@@ -33,11 +33,11 @@ Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     //Place
-    Route::put('/places/add','PlaceController@store');
-    Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
+    Route::get('/places/trending', 'PlaceController@getTrendingPlaces');
     Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
     Route::get('/places/{id}','PlaceController@getPlaceById');
-    Route::get('/places/trending', 'PlaceController@getTrendingPlaces');
+    Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
+    Route::put('/places/add','PlaceController@store');
     Route::post('/places/{id}/addToFavourites','PlaceController@addToFavourites');
     Route::post('/places/{id}/removeFromFavourites','PlaceController@removeFromFavourites');
 
