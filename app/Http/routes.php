@@ -12,6 +12,8 @@
 */
 header('Access-Control-Allow-Origin: http://localhost:8000');
 header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
+
 
 Route::get('/', function () {
 	return view('welcome');
