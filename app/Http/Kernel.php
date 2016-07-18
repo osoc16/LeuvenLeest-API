@@ -15,7 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \Barryvdh\Cors\ServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
     ];
 
     /**
@@ -29,6 +29,7 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\Cors::class, // Place Cors middleware here
             // \App\Http\Middleware\VerifyCsrfToken::class,
         ],
 
