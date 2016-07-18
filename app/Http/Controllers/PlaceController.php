@@ -10,6 +10,7 @@ use App\Providers\FoursquareProvider;
 use \DB;
 use Validator;
 use App\Geolocation;
+use Carbon\Carbon;
 
 class PlaceController extends Controller
 {
@@ -61,6 +62,19 @@ class PlaceController extends Controller
             ->where('places.categoryId', $categoryId)->get();
 
         return json_encode($this->sortByDistance($places, $lat, $lng));
+    }
+
+    public function getTrendingPlaces($lat, $long)
+    {
+        $places = DB::table('checkins')
+            ->join('places', 'places.id', '=', 'checkins.placeId')
+            ->select('places.*', DB::raw('count(*) as checkin_count, checkins.placeId'))
+            ->where('checkins.created_at', '>', Carbon::now()->subWeek())
+            ->groupBy('places.id')
+            ->orderBy('checkin_count', 'DESC')
+            ->take(5)
+            ->get();
+            return json_encode($places);
     }
 
     public function addToFavourites($id){
