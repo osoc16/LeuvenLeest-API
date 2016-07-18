@@ -68,7 +68,7 @@ class CheckinController extends Controller
             $checkin->userId = Auth::user()->id;
             $checkin->save();
         } catch(Exception $ex) {
-            throw new Exception('Error');
+            return new Response('We weren\'t able to create a new place.', 500);
         }
         return $checkin;
     }
