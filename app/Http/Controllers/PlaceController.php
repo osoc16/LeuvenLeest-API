@@ -146,7 +146,7 @@ class PlaceController extends Controller
             $geoLocation->save();
         } catch (Exception $ex)
         {
-            return 'We are not able to create a new geolocation.';
+            return new Response('We are not able to create a new geolocation.', 500);
         }
 
         //Create a new place
