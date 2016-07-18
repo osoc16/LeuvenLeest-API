@@ -8,6 +8,7 @@ use App\Checkin;
 use \Auth;
 use \DB;
 use Validator;
+use Illuminate\Http\Response;
 
 class CheckinController extends Controller
 {
