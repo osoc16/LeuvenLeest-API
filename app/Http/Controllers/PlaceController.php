@@ -69,7 +69,7 @@ class PlaceController extends Controller
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->where('places.categoryId', $categoryId)->get();
 
-        return json_encode($this->sortByDistance($places, $lat, $lng));
+        return new Response($this->sortByDistance($places, $lat, $lng), 200);
     }
 
     public function getTrendingPlaces()
