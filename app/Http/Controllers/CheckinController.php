@@ -73,8 +73,9 @@ class CheckinController extends Controller
         return new Response(json_encode($checkin), 201);
     }
 
-    public function getLatestCheckin($id)
+    public function getLatestCheckin()
     {
+        $id = Auth::user()->id;
         $checkin  = DB::table('checkins')->where('userId', $id)->orderBy('created_at', 'DESC')->first();
         return json_encode($checkin);
     }
