@@ -96,6 +96,10 @@ class CheckinController extends Controller
             ->orderBy('checkins.updated_at', 'DESC')
             ->take(6)
             ->get();
-        return $places;
+        if ($places)
+        {
+            return new Response($places, 200);
+        }
+        return new Response('You haven\'t checked in yet', 404);
     }
 }
