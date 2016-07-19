@@ -78,7 +78,9 @@ class AuthController extends Controller
 
     public function postLogin(Request $request){
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')],true)){
-            return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
+            $response = new Response('Login successfull.', 200);
+            $response->header('Authorization', 'Bearer ' . JWTAuth::fromUser(Auth::user()));
+            return $response;
         }
         return new Response('Wrong logindata', 400);
     }
