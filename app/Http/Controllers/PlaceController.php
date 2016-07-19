@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Place;
+use App\OpeningHours;
 use App\Providers\FoursquareProvider;
 use \DB;
 use Validator;
@@ -14,8 +15,12 @@ use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Response;
 
+
 class PlaceController extends Controller
-{
+{    
+    const MINUTES_PER_HOUR = 60;
+    const MINUTES_PER_TIMESLOT = 15;
+
     public function store(Request $request)
     {
         $expected = [
@@ -47,6 +52,8 @@ class PlaceController extends Controller
             ->first();
         if ($place)
         {
+            $hours = OpeningHours::where('placeId',$id)->get();
+            $place->openingHours = $hours ? $this->getOpeningHours($id) : '';
             $place = json_encode($place);
             return new Response($place, 200);
         }
@@ -156,5 +163,35 @@ class PlaceController extends Controller
             'latitude' => 'required',
             'longitude' => 'required'
         ];
+    }
+
+    private function getOpeningHours($id){
+        $hours = [];
+        for($dayOfWeek = 0; $dayOfWeek < 7; $dayOfWeek++){
+            //0 is Sunday like in the Carbon-class, Monday = 1, ...
+            $hourString = OpeningHours::where('placeId',$id)
+                                ->where('dayOfWeek',$dayOfWeek)->first();
+            if($hourString){
+                $hourString = $hourString->hours;
+                $hoursThisDay = [];
+
+                $open = FALSE;
+                $begin = '';
+                $end = '';
+                for($charnum = 0; $charnum < strlen($hourString); $charnum++){
+                    $character = substr($hourString,$charnum,1);
+                    if(!$open && $character === '1'){
+                        $begin = intdiv($charnum*self::MINUTES_PER_TIMESLOT,self::MINUTES_PER_HOUR).':'.($charnum*self::MINUTES_PER_TIMESLOT)%self::MINUTES_PER_HOUR;
+                        $open = TRUE;
+                    } else if($open && $character === '0'){
+                        $end = intdiv($charnum*self::MINUTES_PER_TIMESLOT,self::MINUTES_PER_HOUR).':'.($charnum*self::MINUTES_PER_TIMESLOT)%self::MINUTES_PER_HOUR;
+                        array_push($hoursThisDay, $begin.'-'.$end);
+                        $open = FALSE;
+                    }
+                }
+                $hours[$dayOfWeek] = $hoursThisDay;
+            }
+        }
+        return $hours;
     }
 }
