@@ -21,9 +21,9 @@ class PhotoController extends Controller
             $destinationPath = 'pictures';
             $file = $request->file('photo');
             if($file->isValid()){
-            	$lastUploaded = Photo::where('placeId',$place->id)->orderBy('id','desc')->first();
-            	$picNumber = $lastUploaded ? $lastUploaded->id : 0;
-            	$picNumber++;
+                $lastUploaded = Photo::where('placeId',$place->id)->orderBy('id','desc')->first();
+                $picNumber = $lastUploaded ? $lastUploaded->id : 0;
+                $picNumber++;
                 $filename = $place->name.'_'.$picNumber.'.'.$file->getClientOriginalExtension();
                 $filename = str_replace(' ','_',$filename);
                 $file->move($destinationPath, $filename);
