@@ -40,9 +40,11 @@ class FavouriteController extends Controller
             {
                 return Response('We weren\'t able to find the place', 404);
             }
-            $place->isFavouriteFrom()->attach($user);
-            $place->save();
-            return new Response('Succesfully added the place to your favourites.',200);
+
+            $favourite = $this->create($user, $place);
+
+            return new Response(($favourite), 201);
+
         } catch(Exception $ex){
             Log::error($ex);
             return new Response('We were not able to add this place to your favourites.', 500);
