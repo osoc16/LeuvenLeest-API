@@ -70,7 +70,6 @@ class PlaceController extends Controller
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->where('places.categoryId', $categoryId)->get();
 
-<<<<<<< HEAD
         return new Response($this->sortByDistance($places, $lat, $lng), 200);
     }
 
@@ -84,36 +83,7 @@ class PlaceController extends Controller
             ->orderBy('checkin_count', 'DESC')
             ->take(5)
             ->get();
-            return new Response($places, 200);
-=======
-        return json_encode($this->sortByDistance($places, $lat, $lng));
-    }
-
-    public function addToFavourites($id){
-        try{
-            $user = Auth::user();
-            $place = Place::find($id);
-            $place->isFavouriteFrom()->attach($user);
-            $place->save();
-            return (new Response('Succesfully added the place to your favourites.',200));
-        } catch(Exception $ex){
-            Log::error($ex);
-            return 'We were not able to add this place to your favourites.';
-        }
-    }
-
-    public function removeFromFavourites($id){
-        try {
-            $user = Auth::user();
-            $place = Place::find($id);
-            $place->isFavouriteFrom()->detach($user);
-            $place->save();
-            return (new Response('Successfully removed the place from your favourites.',200));
-        } catch (Exception $ex){
-            Log::error($ex);
-            return 'We were not able to remove this place from you favourites.';
-        }
->>>>>>> feature/pictureUpload
+        return new Response($places, 200);
     }
 
     private function sortByDistance($places, $lat, $lng)
