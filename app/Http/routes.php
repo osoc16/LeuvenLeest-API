@@ -34,6 +34,7 @@ Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 Route::group(['middleware' => ['jwt.auth']], function () {
     //Place
     Route::get('/places/trending', 'PlaceController@getTrendingPlaces');
+    Route::get('/places/favourite', 'FavouriteController@getFavouritePlaces');
     Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
     Route::get('/places/{id}','PlaceController@getPlaceById')->where('id', '[0-9]+');
     Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory')->where('categoryId', '[0-9]+');
