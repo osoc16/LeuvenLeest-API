@@ -31,10 +31,7 @@ use Illuminate\Http\Request;
 
     // Route::group(['middleware' => ['jwt.auth']], function () {
         //Place
-        Route::post('/places/{id}/uploadPhoto','PlaceController@uploadPhoto');
-        Route::get('/places/{id}/upload', function($id){
-            return view('upload')->with('id',$id);
-        });
+        Route::post('/places/{id}/uploadPhoto','PhotoController@uploadPhoto')->where('id','[0-9]+');
         Route::put('/places/add','PlaceController@store');
         Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
         Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
