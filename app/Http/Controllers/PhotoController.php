@@ -13,9 +13,9 @@ class PhotoController extends Controller
 {
     public function uploadPhoto($id, Request $request){
         try{
-        	$this->validate($request, [
-        		'photo' => 'required|image',
-        	]);
+            $this->validate($request, [
+                'photo' => 'required|image',
+            ]);
 
             $place = Place::find($id);
             $destinationPath = 'pictures';
