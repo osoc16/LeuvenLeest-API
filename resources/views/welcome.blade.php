@@ -12,6 +12,7 @@
 	    	<hr>
 
 	    	<h2>Basic usage - GET</h2>
+	    	<p>GET is used to get information from the database.</p>
 	    	<p class="quote">
 				var settings = {<br>
 				&emsp;"async": true,<br>
@@ -82,6 +83,17 @@
 	    		"url": "http://95.85.15.210/places/getPlacesByCategory/<strong>CATEGORY_ID</strong>/<strong>LATITUDE</strong>/<strong>LONGITUDE</strong>",<br>
 	    		"method": "GET"
 	    	</p>
+
+	    	<p>
+	    		<strong>getPhotos</strong><br>
+	    		Gets the photos for a place<br>
+	    		Returns all photos with place ID:<br>
+	    		<i>id</i>, <i>placeId</i>, <i>userId</i>, <i>name</i>, <i>created_at</i> and <i>updated_at</i>.
+	    	</p>
+	    	<p class="quote">
+	    		"url": "http://95.85.15.210/places/<strong>PLACE_ID</strong>/photos",<br>
+	    		"method": "GET"
+	    	</p>
 	    	
 	    	<hr>
 
@@ -110,6 +122,7 @@
 	    	<hr>
 
 	    	<h2>Basic usage - PUT / POST</h2>
+	    	<p>PUT and POST are used to store information into the database.</p>
 	    	<p class="quote">
 				<br>
 				var settings = {<br>
