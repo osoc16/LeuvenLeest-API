@@ -10,9 +10,15 @@ use App\Providers\FoursquareProvider;
 use \DB;
 use Validator;
 use App\Geolocation;
+<<<<<<< HEAD
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Response;
+=======
+use App\Photo;
+use Auth;
+use Response;
+>>>>>>> feature/pictureUpload
 
 class PlaceController extends Controller
 {
@@ -69,6 +75,7 @@ class PlaceController extends Controller
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->where('places.categoryId', $categoryId)->get();
 
+<<<<<<< HEAD
         return new Response($this->sortByDistance($places, $lat, $lng), 200);
     }
 
@@ -83,6 +90,35 @@ class PlaceController extends Controller
             ->take(5)
             ->get();
             return new Response($places, 200);
+=======
+        return json_encode($this->sortByDistance($places, $lat, $lng));
+    }
+
+    public function addToFavourites($id){
+        try{
+            $user = Auth::user();
+            $place = Place::find($id);
+            $place->isFavouriteFrom()->attach($user);
+            $place->save();
+            return (new Response('Succesfully added the place to your favourites.',200));
+        } catch(Exception $ex){
+            Log::error($ex);
+            return 'We were not able to add this place to your favourites.';
+        }
+    }
+
+    public function removeFromFavourites($id){
+        try {
+            $user = Auth::user();
+            $place = Place::find($id);
+            $place->isFavouriteFrom()->detach($user);
+            $place->save();
+            return (new Response('Successfully removed the place from your favourites.',200));
+        } catch (Exception $ex){
+            Log::error($ex);
+            return 'We were not able to remove this place from you favourites.';
+        }
+>>>>>>> feature/pictureUpload
     }
 
     private function sortByDistance($places, $lat, $lng)

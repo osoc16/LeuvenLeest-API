@@ -41,6 +41,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::put('/places/add','PlaceController@store');
     Route::post('/places/{id}/addToFavourites','FavouriteController@addToFavourites')->where('id', '[0-9]+');
     Route::post('/places/{id}/removeFromFavourites','FavouriteController@removeFromFavourites')->where('id', '[0-9]+');
+    Route::post('/places/{id}/uploadPhoto','PhotoController@uploadPhoto')->where('id','[0-9]+');
 
     //Checkin
     Route::put('/checkin','CheckinController@store');
