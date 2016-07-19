@@ -80,7 +80,7 @@ class AuthController extends Controller
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')],true)){
             return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
         }
-        return 'wrong logindata';
+        return new Response('Wrong logindata', 400);
     }
 
     public function logout(){
