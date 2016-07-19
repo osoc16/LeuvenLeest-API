@@ -85,40 +85,6 @@ class PlaceController extends Controller
             return new Response($places, 200);
     }
 
-    public function addToFavourites($id){
-        try{
-            $user = Auth::user();
-            $place = Place::find($id);
-            if (!$place)
-            {
-                return Response('We weren\'t able to find the place', 404);
-            }
-            $place->isFavouriteFrom()->attach($user);
-            $place->save();
-            return new Response('Succesfully added the place to your favourites.',200);
-        } catch(Exception $ex){
-            Log::error($ex);
-            return new Response('We were not able to add this place to your favourites.', 500);
-        }
-    }
-
-    public function removeFromFavourites($id){
-        try {
-            $user = Auth::user();
-            $place = Place::find($id);
-            if (!$place)
-            {
-                return new Response('We weren\'t able to find the place', 404);
-            }
-            $place->isFavouriteFrom()->detach($user);
-            $place->save();
-            return new Response('Successfully removed the place from your favourites.',200);
-        } catch (Exception $ex){
-            Log::error($ex);
-            return new Response('We were not able to remove this place from you favourites.',500);
-        }
-    }
-
     private function sortByDistance($places, $lat, $lng)
     {
         foreach ($places as $place)
