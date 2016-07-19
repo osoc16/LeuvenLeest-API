@@ -10,7 +10,7 @@
 	    	<nav>
 	    		<h2>Navigation</h2>
 	    		<ul>
-	    			<li><a href="#User">User</a></li>
+	    			<li><a href="#User">User validation</a></li>
 	    			<ul>
 		    			<li>- <a href="#register">register</a></li>
 	    				<li>- <a href="#login">login</a></li>
@@ -44,6 +44,15 @@
 		    			<li>- <a href="#POSTCheckin">Checkin</a></li>
 		    			<ul>
 		    				<li><a href="#checkin">checkins</a></li>
+		    			</ul>
+		    			<li>- <a href="#POSTFavorites">Favorites</a></li>
+		    			<ul>
+		    				<li><a href="#addFavorite">addFavorite</a></li>
+		    				<li><a href="#removeFavorite">removeFavorite</a></li>
+		    			</ul>
+		    			<li>- <a href="#POSTPhotos">Photos</a></li>
+		    			<ul>
+		    				<li><a href="#uploadPhoto">uploadPhoto</a></li>
 		    			</ul>
 	    			</ul>
 	    		</ul>
@@ -314,8 +323,49 @@
 					&emsp;&emsp;"longitude": "<strong>LONGITUDE</strong>"<br>
 					&emsp;}
 		    	</p>
+
+		    	<hr>
+
+		    	<h2><a name="POSTFavorites">Favorites</a></h2>
+
+		    	<p>
+		    		<strong><a name="addFavorite">addFavorite</a></strong><br>
+		    		Adds a favorite to the database<br>
+		    		Returns the new favorite:<br>
+		    		<i>id</i>, <i>userId</i>, <i>placeId</i>, <i>created_at</i>, <i>updated_at</i>.
+		    	</p>
+		    	<p class="quote">
+					&emsp;"url": "http://95.85.15.210/places/<strong>PLACE_ID</strong>/addToFavorites",<br>
+					&emsp;"method": "POST",
+				</p>
+
+				<p>
+					<strong><a name="removeFavorite">removeFavorite</a></strong><br>
+					Removes a favorite<br>
+					Returns nothing
+				</p>
+				<p class="quote">
+					"url": "http://95.85.15.210/places/<strong>PLACE_ID</strong>/removeFromFavourites",<br>
+					"method": "POST",
+				</p>
+
+				<hr>
+
+				<h2><a name="POSTPhotos">Photos</a></h2>
+
+				<p>
+					<strong><a name="uploadPhoto">uploadPhoto</a></strong><br>
+					Uploads a picture to the database and stores it.<br>
+					Returns success message
+				</p>
+				<p class="quote">
+					"url": "http://95.85.15.210/places/<strong>PLACE_ID</strong>/uploadPhoto",<br>
+					"method": "POST",
+				</p>
+
 		    </div>
 	    </div>
     </body>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript"></script>-->
 </html>
