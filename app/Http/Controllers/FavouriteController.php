@@ -55,12 +55,21 @@ class FavouriteController extends Controller
         try {
             $user = Auth::user();
             $place = Place::find($id);
+
             if (!$place)
             {
                 return new Response('We weren\'t able to find the place', 404);
             }
-            $place->isFavouriteFrom()->detach($user);
-            $place->save();
+
+            $favouriteId = $user->id . '_' . $place->id;
+
+            $favourite = Favourite::find($favouriteId);
+
+            if ($favourite)
+            {
+                $favourite->delete();
+            }
+
             return new Response('Successfully removed the place from your favourites.',200);
         } catch (Exception $ex){
             Log::error($ex);
