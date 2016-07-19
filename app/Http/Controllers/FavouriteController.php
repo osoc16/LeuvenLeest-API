@@ -61,7 +61,7 @@ class FavouriteController extends Controller
                 return new Response('We weren\'t able to find the place', 404);
             }
 
-            $favouriteId = $user->id . '_' . $place->id;
+            $favouriteId = $this->createUniqueId($user, $place);
 
             $favourite = Favourite::find($favouriteId);
 
@@ -79,7 +79,7 @@ class FavouriteController extends Controller
 
     private function create($user, $place)
     {
-        $favouriteId = $user->id . '_' . $place->id;
+        $favouriteId = $this->createUniqueId($user, $place);
 
         $favourite = Favourite::find($favouriteId);
 
@@ -95,5 +95,10 @@ class FavouriteController extends Controller
         $favourite->save();
 
         return $favourite;
+    }
+
+    private function createUniqueId($user, $place)
+    {
+        return $user->id . '_' . $place->id;
     }
 }
