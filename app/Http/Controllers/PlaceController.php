@@ -50,7 +50,7 @@ class PlaceController extends Controller
             $place = json_encode($place);
             return new Response($place, 200);
         }
-        return new Response('Place not found', 404);
+        return new Response('Place not found', 400);
     }
 
     public function getPlaces($lat, $lng)
@@ -95,11 +95,10 @@ class PlaceController extends Controller
             }
             $place->isFavouriteFrom()->attach($user);
             $place->save();
-            return (new Response('Succesfully added the place to your favourites.',200));
+            return new Response('Succesfully added the place to your favourites.',200);
         } catch(Exception $ex){
             Log::error($ex);
             return new Response('We were not able to add this place to your favourites.', 500);
-        }
     }
 
     public function removeFromFavourites($id){
@@ -112,10 +111,10 @@ class PlaceController extends Controller
             }
             $place->isFavouriteFrom()->detach($user);
             $place->save();
-            return (new Response('Successfully removed the place from your favourites.',200));
+            return new Response('Successfully removed the place from your favourites.',200);
         } catch (Exception $ex){
             Log::error($ex);
-            return 'We were not able to remove this place from you favourites.';
+            return new Response('We were not able to remove this place from you favourites.',500);
         }
     }
 
