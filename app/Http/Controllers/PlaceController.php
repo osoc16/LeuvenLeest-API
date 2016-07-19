@@ -10,15 +10,10 @@ use App\Providers\FoursquareProvider;
 use \DB;
 use Validator;
 use App\Geolocation;
-<<<<<<< HEAD
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Response;
-=======
-use App\Photo;
-use Auth;
-use Response;
->>>>>>> feature/pictureUpload
+
 
 class PlaceController extends Controller
 {
