@@ -150,8 +150,6 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
-
->>>>>>> feature/pictureUpload
         /*
          * Application Service Providers...
          */
