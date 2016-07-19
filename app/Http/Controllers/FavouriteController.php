@@ -7,6 +7,7 @@ use App\Http\Requests;
 use Auth;
 use Illuminate\Http\Response;
 use App\Place;
+use \DB;
 
 
 class FavouriteController extends Controller
