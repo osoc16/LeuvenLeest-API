@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use \Auth;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
 use \JWTAuth;
 
@@ -86,7 +87,7 @@ class AuthController extends Controller
         if(Auth::check()){
             Auth::logout();
         }
-        return redirect($this->redirectTo);
+        return new Response('Successfully logged out.', 200);
     }
 
     public function login($client){
