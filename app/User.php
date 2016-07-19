@@ -35,4 +35,8 @@ class User extends Authenticatable
     public function favourites(){
         return $this->hasMany('App\Place','favourites','placeId','userId')->withTimestamps();
     }
+
+    public function photos(){
+        return $this->hasMany(Photo::class);
+    }
 }

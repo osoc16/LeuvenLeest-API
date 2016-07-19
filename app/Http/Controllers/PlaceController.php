@@ -11,6 +11,9 @@ use Debugbar;
 use \DB;
 use Validator;
 use App\Geolocation;
+use App\Photo;
+use Auth;
+use Response;
 
 class PlaceController extends Controller
 {
@@ -67,7 +70,7 @@ class PlaceController extends Controller
     public function addToFavourites($id){
         try{
             $user = Auth::user();
-            $place = App\Place::find($id);
+            $place = Place::find($id);
             $place->isFavouriteFrom()->attach($user);
             $place->save();
             return (new Response('Succesfully added the place to your favourites.',200));
@@ -80,7 +83,7 @@ class PlaceController extends Controller
     public function removeFromFavourites($id){
         try {
             $user = Auth::user();
-            $place = App\Place::find($id);
+            $place = Place::find($id);
             $place->isFavouriteFrom()->detach($user);
             $place->save();
             return (new Response('Successfully removed the place from your favourites.',200));

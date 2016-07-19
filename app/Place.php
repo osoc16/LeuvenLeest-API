@@ -14,7 +14,7 @@ class Place extends Model
     }
 
     public function photos(){
-    	return $this->hasMany(Photo::class);
+    	return $this->hasMany(Photo::class,'placeId','id');
     }
 
     public function getLocation(){

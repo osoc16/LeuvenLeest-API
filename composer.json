@@ -8,6 +8,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "laravel/socialite": "~2.0",
+        "laravelcollective/html": "5.2.*",
         "barryvdh/laravel-debugbar": "^2.2",
         "tymon/jwt-auth": "^0.5.9",
         "barryvdh/laravel-cors": "^0.8.1"

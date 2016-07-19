@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['cors']], function () {
+// Route::group(['middleware' => ['cors']], function () {
     Route::get('/', function () {
     	return view('welcome');
     });
@@ -29,14 +29,18 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
 
-    Route::group(['middleware' => ['jwt.auth']], function () {
+    // Route::group(['middleware' => ['jwt.auth']], function () {
         //Place
+        Route::post('/places/{id}/uploadPhoto','PlaceController@uploadPhoto');
+        Route::get('/places/{id}/upload', function($id){
+            return view('upload')->with('id',$id);
+        });
         Route::put('/places/add','PlaceController@store');
         Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
         Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
+        Route::post('/places/{id}/addToFavourites','PlaceController@addToFavourites');
+        Route::post('/places/{id}/removeFromFavourites','PlaceController@removeFromFavourites');
         Route::get('/places/{id}','PlaceController@getPlaceById');
-    Route::post('/places/{id}/addToFavourites','PlaceController@addToFavourites');
-    Route::post('/places/{id}/removeFromFavourites','PlaceController@removeFromFavourites');
 
         //Checkin
         Route::put('/checkin','CheckinController@store');
@@ -45,4 +49,5 @@ Route::group(['middleware' => ['cors']], function () {
 
         // Users
         Route::get('/user/get/{id}','UserController@getUserById');
-    });
+    // });
+// });
