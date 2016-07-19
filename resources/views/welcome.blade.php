@@ -167,10 +167,10 @@
 		    		<i>id</i>, <i>name</i>, <i>email</i>, <i>password</i>, <i>remember_token</i>, <i>created_at</i> and <i>updated_at</i>.
 		    	</p>
 		    	<p class="quote">
-		    		"url": "http://95.85.15.210/user/get/<strong>USER_ID</strong>",<br>
+		    		"url": "http://95.85.15.210/user/<strong>USER_ID</strong>",<br>
 		    		"method": "GET"
 		    	</p>
-		    	
+
 		    	<hr>
 
 		    	<h2><a name="GETPlaces">Places</a></h2>
@@ -218,7 +218,7 @@
 		    		"url": "http://95.85.15.210/places/<strong>PLACE_ID</strong>/photos",<br>
 		    		"method": "GET"
 		    	</p>
-		    	
+
 		    	<hr>
 
 		    	<h2><a name="GETCheckin">Checkin</a></h2>
@@ -287,7 +287,7 @@
 				</p>
 				<p>Optional data:</p>
 		    	<p class="quote">
-			    	"data": {<br> 
+			    	"data": {<br>
 					&emsp;"address": "<strong>ADDRESS</strong>",<br>
 					&emsp;"description": "<strong>DESCRIPTION</strong>",<br>
 					&emsp;"site": "<strong>WEBSITE</strong>"<br>
