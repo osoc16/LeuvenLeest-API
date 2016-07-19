@@ -35,11 +35,11 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     //Place
     Route::get('/places/trending', 'PlaceController@getTrendingPlaces');
     Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
-    Route::get('/places/{id}','PlaceController@getPlaceById');
-    Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory');
+    Route::get('/places/{id}','PlaceController@getPlaceById')->where('id', '[0-9]+');
+    Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory')->where('categoryId', '[0-9]+');
     Route::put('/places/add','PlaceController@store');
-    Route::post('/places/{id}/addToFavourites','PlaceController@addToFavourites');
-    Route::post('/places/{id}/removeFromFavourites','PlaceController@removeFromFavourites');
+    Route::post('/places/{id}/addToFavourites','PlaceController@addToFavourites')->where('id', '[0-9]+');
+    Route::post('/places/{id}/removeFromFavourites','PlaceController@removeFromFavourites')->where('id', '[0-9]+');
 
     //Checkin
     Route::put('/checkin','CheckinController@store');
@@ -47,5 +47,5 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/checkin/recent','CheckinController@getRecentCheckins');
 
     // Users
-    Route::get('/user/get/{id}','UserController@getUserById');
+    Route::get('/user/{id}','UserController@getUserById')->where('id', '[0-9]+');
 });

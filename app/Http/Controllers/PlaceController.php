@@ -99,6 +99,7 @@ class PlaceController extends Controller
         } catch(Exception $ex){
             Log::error($ex);
             return new Response('We were not able to add this place to your favourites.', 500);
+        }
     }
 
     public function removeFromFavourites($id){
