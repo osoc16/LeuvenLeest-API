@@ -17,6 +17,19 @@ class FavouriteController extends Controller
 
     }
 
+    public function getFavouritePlaces()
+    {
+        $favourites = DB::table('favourites')
+            ->where('userId', '=', Auth::user()->id)
+            ->get();
+
+        if ($favourites)
+        {
+            return new Response($favourites, 200);
+        }
+        return new Response('You haven\'t favourite any places.', 400);
+    }
+
     public function addToFavourites($id){
         try{
             $user = Auth::user();
