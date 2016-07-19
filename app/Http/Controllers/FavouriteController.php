@@ -67,4 +67,24 @@ class FavouriteController extends Controller
             return new Response('We were not able to remove this place from you favourites.',500);
         }
     }
+
+    private function create($user, $place)
+    {
+        $favouriteId = $user->id + $place->id;
+
+        $favourite = Favourite::find($favouriteId);
+
+        if ($favourite)
+        {
+            return new Response($favourite, 200);
+        }
+
+        $favourite = new Favourite();
+        $favourite->id = $favouriteId;
+        $favourite->userId = $user->id;
+        $favourite->placeId = $place->id;
+        $favourite->save();
+
+        return $favourite;
+    }
 }
