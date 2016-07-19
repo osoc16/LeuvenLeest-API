@@ -8,6 +8,7 @@ use Auth;
 use Illuminate\Http\Response;
 use App\Place;
 use \DB;
+use App\Favourite;
 
 
 class FavouriteController extends Controller
@@ -39,9 +40,11 @@ class FavouriteController extends Controller
             {
                 return Response('We weren\'t able to find the place', 404);
             }
-            $place->isFavouriteFrom()->attach($user);
-            $place->save();
-            return new Response('Succesfully added the place to your favourites.',200);
+
+            $favourite = $this->create($user, $place);
+
+            return new Response($favourite, 201);
+
         } catch(Exception $ex){
             Log::error($ex);
             return new Response('We were not able to add this place to your favourites.', 500);
@@ -52,16 +55,50 @@ class FavouriteController extends Controller
         try {
             $user = Auth::user();
             $place = Place::find($id);
+
             if (!$place)
             {
                 return new Response('We weren\'t able to find the place', 404);
             }
-            $place->isFavouriteFrom()->detach($user);
-            $place->save();
+
+            $favouriteId = $this->createUniqueId($user, $place);
+
+            $favourite = Favourite::find($favouriteId);
+
+            if ($favourite)
+            {
+                $favourite->delete();
+            }
+
             return new Response('Successfully removed the place from your favourites.',200);
         } catch (Exception $ex){
             Log::error($ex);
             return new Response('We were not able to remove this place from you favourites.',500);
         }
+    }
+
+    private function create($user, $place)
+    {
+        $favouriteId = $this->createUniqueId($user, $place);
+
+        $favourite = Favourite::find($favouriteId);
+
+        if ($favourite)
+        {
+            return new Response($favourite, 200);
+        }
+
+        $favourite = new Favourite();
+        $favourite->id = $favouriteId;
+        $favourite->userId = $user->id;
+        $favourite->placeId = $place->id;
+        $favourite->save();
+
+        return $favourite;
+    }
+
+    private function createUniqueId($user, $place)
+    {
+        return $user->id . '_' . $place->id;
     }
 }
