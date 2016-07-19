@@ -32,4 +32,8 @@ class Place extends Model
     public function isFavouriteFrom(){
         return $this->belongsToMany('App\User','favourites','placeId','userId')->withTimestamps();
     }
+
+    public function openingHours(){
+        $this->hasMany(OpeningHours::class,'placeId','id');
+    }
 }
