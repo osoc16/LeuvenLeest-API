@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Response;
 
-
 class PlaceController extends Controller
 {
     public function store(Request $request)
@@ -83,7 +82,7 @@ class PlaceController extends Controller
             ->orderBy('checkin_count', 'DESC')
             ->take(5)
             ->get();
-        return new Response($places, 200);
+            return new Response($places, 200);
     }
 
     private function sortByDistance($places, $lat, $lng)

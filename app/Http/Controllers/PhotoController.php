@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Place;
 use App\Photo;
 use Auth;
+use DB;
 
 class PhotoController extends Controller
 {
@@ -38,5 +39,15 @@ class PhotoController extends Controller
             Log::error($ex);
             return new Response('Couldn\'t upload the picture.',500);
         }
+    }
+
+    public function getPictures($id)
+    {
+        $photos = DB::table('photos')
+            ->where('placeId', $id)
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+        return json_encode($photos);
     }
 }
