@@ -47,5 +47,5 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/checkin/recent','CheckinController@getRecentCheckins');
 
     // Users
-    Route::get('/user/get/{id}','UserController@getUserById');
+    Route::get('/user/{id}','UserController@getUserById')->where('id', '[0-9]+');
 });
