@@ -43,7 +43,7 @@ class FavouriteController extends Controller
 
             $favourite = $this->create($user, $place);
 
-            return new Response(($favourite), 201);
+            return new Response($favourite, 201);
 
         } catch(Exception $ex){
             Log::error($ex);
