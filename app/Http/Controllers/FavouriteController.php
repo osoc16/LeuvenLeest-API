@@ -79,7 +79,7 @@ class FavouriteController extends Controller
 
     private function create($user, $place)
     {
-        $favouriteId = $user->id + $place->id;
+        $favouriteId = $user->id . '_' . $place->id;
 
         $favourite = Favourite::find($favouriteId);
 
