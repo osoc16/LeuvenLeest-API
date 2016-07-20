@@ -99,15 +99,12 @@
 					&emsp;&emsp;"crossDomain": true,<br>
 					&emsp;&emsp;"url": "http://95.85.15.210/auth/login",<br>
 					&emsp;&emsp;"method": "POST",<br>
-					&emsp;&emsp;"headers": {<br>
-					&emsp;&emsp;&emsp;"cache-control": "no-cache"<br>
-					&emsp;&emsp;},<br>
 					&emsp;&emsp;"processData": false,<br>
 					&emsp;&emsp;"contentType": false,<br>
 					&emsp;&emsp;"mimeType": "multipart/form-data",<br>
 					&emsp;&emsp;"data": {<br>
-					&emsp;&emsp;&emsp;"email", "<strong>EMAIL</strong>",<br>
-					&emsp;&emsp;&emsp;"password", "<strong>PASSWORD</strong>"<br>
+					&emsp;&emsp;&emsp;"email": "<strong>EMAIL</strong>",<br>
+					&emsp;&emsp;&emsp;"password": "<strong>PASSWORD</strong>"<br>
 					&emsp;&emsp;}<br>
 					&emsp;}<br>
 					<br>
@@ -127,9 +124,6 @@
 					&emsp;&emsp;"crossDomain": true,<br>
 					&emsp;&emsp;"url": "http://95.85.15.210/auth/logout",<br>
 					&emsp;&emsp;"method": "GET",<br>
-					&emsp;&emsp;"headers": {<br>
-					&emsp;&emsp;&emsp;"cache-control": "no-cache"<br>
-					&emsp;&emsp;},<br>
 					&emsp;&emsp;"processData": false,<br>
 					&emsp;&emsp;"contentType": false,<br>
 					&emsp;&emsp;"mimeType": "multipart/form-data"<br>
@@ -188,7 +182,9 @@
 		    		<strong><a name="getPlaces">getPlaces</a></strong><br>
 		    		Get the places ordered by distance (in km) by passing latitude and longitude<br>
 		    		Returns all places:<br>
-		    		<i>id</i>, <i>foursquareId</i>, <i>geoId</i>, <i>name</i>, <i>address</i>, <i>description</i>, <i>userId</i>, <i>email</i>, <i>categoryId</i>, <i>site</i>, <i>created_at</i>, <i>updated_at</i>, <i>longitude</i> and <i>distance</i>.
+		    		<i>id</i>, <i>foursquareId</i>, <i>geoId</i>, <i>name</i>, <i>address</i>, <i>description</i>, <i>userId</i>, <i>email</i>, <i>categoryId</i>, <i>site</i>, <i>created_at</i>, <i>updated_at</i>, <i>openingHours</i>, <i>longitude</i> and <i>distance</i>.<br>
+		    		<span style="color: red;">WARNING</span> The openingHours returns an array with 7 arrays, one for each day of the week.<br>
+		    		Sunday is 0, Monday is 1, Tuesday is 2, Wednesday is 3, Thursday is 4, Friday is 5 and Saturday is 6.
 		    	</p>
 		    	<p class="quote">
 		    		"url": "http://95.85.15.210/places/<strong>LATITUDE</strong>/<strong>LONGITUDE</strong>",<br>
@@ -199,7 +195,9 @@
 		    		<strong><a name="getPlaceById">getPlaceById</a></strong><br>
 		    		Get place by ID, you only need to pass the ID<br>
 		    		Returns place:<br>
-		    		<i>id</i>, <i>foursquareId</i>, <i>geoId</i>, <i>name</i>, <i>address</i>, <i>description</i>, <i>userId</i>, <i>email</i>, <i>categoryId</i>, <i>site</i>, <i>created_at</i>, <i>updated_at</i>, <i>longitude</i> and <i>distance</i>.
+		    		<i>id</i>, <i>foursquareId</i>, <i>geoId</i>, <i>name</i>, <i>address</i>, <i>description</i>, <i>userId</i>, <i>email</i>, <i>categoryId</i>, <i>site</i>, <i>created_at</i>, <i>updated_at</i>, <i>openingHours</i>, <i>longitude</i> and <i>distance</i>.<br>
+		    		<span style="color: red;">WARNING</span> The openingHours returns an array with 7 arrays, one for each day of the week.<br>
+		    		Sunday is 0, Monday is 1, Tuesday is 2, Wednesday is 3, Thursday is 4, Friday is 5 and Saturday is 6.
 		    	</p>
 		    	<p class="quote">
 		    		"url": "http://95.85.15.210/places/<strong>PLACE_ID</strong>",<br>
@@ -210,7 +208,9 @@
 		    		<strong><a name="getPlacesByCategory">getPlacesByCategory</a></strong><br>
 		    		Same as <strong>getPlaces</strong>, but with category ID<br>
 		    		Returns all places with category ID:<br>
-		    		<i>id</i>, <i>foursquareId</i>, <i>geoId</i>, <i>name</i>, <i>address</i>, <i>description</i>, <i>userId</i>, <i>email</i>, <i>categoryId</i>, <i>site</i>, <i>created_at</i>, <i>updated_at</i>, <i>longitude</i> and <i>distance</i>.
+		    		<i>id</i>, <i>foursquareId</i>, <i>geoId</i>, <i>name</i>, <i>address</i>, <i>description</i>, <i>userId</i>, <i>email</i>, <i>categoryId</i>, <i>site</i>, <i>created_at</i>, <i>updated_at</i>, <i>openingHours</i>, <i>longitude</i> and <i>distance</i>.<br>
+		    		<span style="color: red;">WARNING</span> The openingHours returns an array with 7 arrays, one for each day of the week.<br>
+		    		Sunday is 0, Monday is 1, Tuesday is 2, Wednesday is 3, Thursday is 4, Friday is 5 and Saturday is 6.
 		    	</p>
 		    	<p class="quote">
 		    		"url": "http://95.85.15.210/places/getPlacesByCategory/<strong>CATEGORY_ID</strong>/<strong>LATITUDE</strong>/<strong>LONGITUDE</strong>",<br>
