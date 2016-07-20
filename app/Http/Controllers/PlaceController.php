@@ -78,7 +78,8 @@ class PlaceController extends Controller
                 'places.email',
                 'places.site',
                 'geolocations.*',
-                'categories.name as category')
+                'categories.name as category'
+                )
             ->get();
 
         return new Response($this->sortByDistance($places, $lat, $lng), 200);
