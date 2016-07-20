@@ -76,7 +76,7 @@ class AuthController extends Controller
     }
 
     public function postLogin(Request $request){
-        if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')],true)){
+        if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])){
             return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
         }
         return 'wrong logindata';
@@ -84,9 +84,10 @@ class AuthController extends Controller
 
     public function logout(){
         if(Auth::check()){
+            JWTAuth::invalidate(JWTAuth::getToken());
             Auth::logout();
+            return 'Successfully logged out.';
         }
-        return redirect($this->redirectTo);
     }
 
     public function login($client){
