@@ -140,10 +140,10 @@ class QuestionSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('questions')->insert([['question' => 'one'],
-                                        ['question' => 'two'],
-                                        ['question' => 'three'],
-                                        ['question' => 'four']]);
+        DB::table('questions')->insert([['question' => 'Is de plaats afgelegen of druk?'],
+                                        ['question' => 'Is de plaats stil of luid?'],
+                                        ['question' => 'Is de plaats groen of stedelijk?'],
+                                        ['question' => 'Is de plaats rustig of levendig?']]);
 
         $places = DB::table('places')->get();
         foreach($places as $place)
