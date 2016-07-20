@@ -148,9 +148,10 @@ class OpeningHoursSeeder extends Seeder
      */
     public function run()
     {
-        $totalHourStringLength = self::HOURS_IN_A_DAY*(self::MINUTES_PER_HOUR/self::DIVISION_UNIT)-1;
+        $totalHourStringLength = self::HOURS_IN_A_DAY*(self::MINUTES_PER_HOUR/self::DIVISION_UNIT);
         $places = DB::table('places')->get();
         foreach($places as $place){
+            //echo $place->name;
             $hours = json_decode(file_get_contents(
                 'https://api.foursquare.com/v2/venues/'.$place->foursquareId.'/hours'
                 .'?client_id='.env('FOURSQUARE_CLIENT_ID','')
@@ -168,17 +169,18 @@ class OpeningHoursSeeder extends Seeder
                             $starthour =  intdiv(intval($open->start),100);
                             $startminutes = intval($open->start)%100;
                             $bitstart = (($starthour*self::MINUTES_PER_HOUR)+$startminutes)/self::DIVISION_UNIT;
-                            $hourstring .= str_repeat('0', $bitstart-strlen($hourstring)-1);
+                            $hourstring .= str_repeat('0', $bitstart-strlen($hourstring));
                             $endhour = intdiv(intval($open->end),100);
                             $endminutes = intval($open->end)%100;
                             if($endhour == 0 && $endminutes == 0){
-                                $endhour = 23;
-                                $endminutes = 45;
+                                $endhour = 24;
                             }
                             $bitend = (($endhour*self::MINUTES_PER_HOUR)+$endminutes)/self::DIVISION_UNIT;
                             $hourstring .= str_repeat('1', $bitend-$bitstart);
                         }
-                        $hourstring .= str_repeat('0', $totalHourStringLength-strlen($hourstring));
+                        //echo ' remainder: '.$totalHourStringLength.'-'.strlen($hourstring);
+                        $remainder = $totalHourStringLength-strlen($hourstring);
+                        $hourstring .= str_repeat('0', $remainder);
                         $openinghours->hours = $hourstring;
                         $openinghours->save();
                     }
