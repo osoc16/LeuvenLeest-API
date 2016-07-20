@@ -60,7 +60,15 @@ class PlaceController extends Controller
         $places = DB::table('places')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->join('categories', 'places.categoryId', '=', 'categories.id')
-            ->select('places.*', 'geolocations.*', 'categories.name as category')
+            ->select(
+                'places.id',
+                'places.name',
+                'places.address',
+                'places.description',
+                'places.email',
+                'places.site',
+                'geolocations.*',
+                'categories.name as category')
             ->get();
 
         return new Response($this->sortByDistance($places, $lat, $lng), 200);
