@@ -11,6 +11,7 @@ use \Auth;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use \JWTAuth;
+use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
