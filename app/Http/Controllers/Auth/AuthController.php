@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use \Auth;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Laravel\Socialite\Facades\Socialite;
 use \JWTAuth;
 
@@ -78,17 +77,16 @@ class AuthController extends Controller
 
     public function postLogin(Request $request){
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')],true)){
-            // return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
-            return new Response(['oAuth_token' => JWTAuth::fromUser(Auth::user())], 200);
+            return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
         }
-        return new Response('Wrong logindata', 401);
+        return 'wrong logindata';
     }
 
     public function logout(){
         if(Auth::check()){
             Auth::logout();
         }
-        return new Response('Successfully logged out.', 200);
+        return redirect($this->redirectTo);
     }
 
     public function login($client){
