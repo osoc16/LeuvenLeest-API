@@ -9,26 +9,14 @@ use App\Place;
 use App\Photo;
 use Auth;
 use DB;
-use Validator;
 
 class PhotoController extends Controller
 {
     public function uploadPhoto($id, Request $request){
         try{
-            //$this->validate($request, [
-            //    'photo' => 'required|image',
-            //]);
-
-            $expected = ['photo'];
-
-            $input = $request->only($expected);
-
-            $validator = Validator::make($input, ['photo' => 'required|image']);
-
-            if ($validator->fails())
-            {
-                return $validator->errors();
-            }
+            $this->validate($request, [
+                'photo' => 'required|image',
+            ]);
 
             $place = Place::find($id);
             $destinationPath = 'pictures';
