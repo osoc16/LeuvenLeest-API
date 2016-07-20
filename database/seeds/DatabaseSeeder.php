@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Http\Request;
+use App\Place;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -65,10 +67,11 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-            DB::table('categories')->insert([['name' => 'park', 'foursquareId' => '4bf58dd8d48988d163941735', 'icon' => 'null'],
-                                             ['name' => 'coffee shop', 'foursquareId' => '4bf58dd8d48988d1e0931735', 'icon' => 'null'],
-                                             ['name' => 'college library', 'foursquareId' => '4bf58dd8d48988d1a7941735', 'icon' => 'null'],
-                                             ['name' => 'library', 'foursquareId' => '4bf58dd8d48988d12f941735', 'icon' => 'null']]);
+        $now = Carbon::now();
+        DB::table('categories')->insert([['name' => 'park', 'foursquareId' => '4bf58dd8d48988d163941735', 'icon' => 'null', 'created_at' => $now, 'updated_at' => $now],
+                                             ['name' => 'coffee shop', 'foursquareId' => '4bf58dd8d48988d1e0931735', 'icon' => 'null', 'created_at' => $now, 'updated_at' => $now],
+                                             ['name' => 'college library', 'foursquareId' => '4bf58dd8d48988d1a7941735', 'icon' => 'null', 'created_at' => $now, 'updated_at' => $now],
+                                             ['name' => 'library', 'foursquareId' => '4bf58dd8d48988d12f941735', 'icon' => 'null', 'created_at' => $now, 'updated_at' => $now]]);
     }
 }
 
@@ -120,17 +123,34 @@ class PlaceSeeder extends Seeder
             $category = DB::table('categories')->where('foursquareId',$catfoursquareid)->first();
             $categoryid = is_object($category) ? $category->id : null;
             $url = property_exists($fullvenue, 'url') ? $fullvenue->url : '';
+            $description = property_exists($fullvenue, 'description') ? $fullvenue->description : '';
 
+            $place = new Place();
+            $place->name = $fullvenue->name;
+            $place->geoId = $geo->id;
+            $place->foursquareId = $fullvenue->id;
+            $place->description = $description;
+            $place->email = '';
+            $place->site = $url;
+            $place->categoryId = $categoryid;
+            $place->address = $fullvenue->location->formattedAddress[0];
+            $place->save();
+        }
+    }
+}
 
+class OpeningHoursSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $places = DB::table('places')->get();
+        foreach($places as $place){
 
-            DB::table('places')->insert([['name' => $fullvenue->name,
-                                          'geoId' => $geo->id,
-                                          'foursquareId' => $fullvenue->id,
-                                          'description' => '',
-                                          'email' => '',
-                                          'site' => $url,
-                                          'categoryId' => $categoryid,
-                                          'address' => $fullvenue->location->formattedAddress[0]]]);
         }
     }
 }
