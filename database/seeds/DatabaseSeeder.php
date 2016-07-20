@@ -176,7 +176,7 @@ class OpeningHoursSeeder extends Seeder
                                 $endminutes = 45;
                             }
                             $bitend = (($endhour*self::MINUTES_PER_HOUR)+$endminutes)/self::DIVISION_UNIT;
-                            $hourstring .= str_repeat('1', $bitend-$bitstart-1);
+                            $hourstring .= str_repeat('1', $bitend-$bitstart);
                         }
                         $hourstring .= str_repeat('0', $totalHourStringLength-strlen($hourstring));
                         $openinghours->hours = $hourstring;
