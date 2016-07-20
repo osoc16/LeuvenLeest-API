@@ -90,7 +90,19 @@ class PlaceController extends Controller
         $places = DB::table('categories')
             ->join('places', 'places.categoryId', '=', 'categories.id')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
-            ->where('places.categoryId', $categoryId)->get();
+            ->where('places.categoryId', $categoryId)
+            ->select(
+                'places.id',
+                'places.name',
+                'places.address',
+                'places.description',
+                'places.email',
+                'places.site',
+                'geolocations.*',
+                'categories.name as category',
+                'categories.icon'
+                )
+            ->get();
 
         return new Response($this->sortByDistance($places, $lat, $lng), 200);
     }
