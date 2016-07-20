@@ -22,4 +22,9 @@ class UserController extends Controller
         }
         return new Response('We didn\'t found an user with this id', 404);
     }
+
+    public function getAccountDetails()
+    {
+        return new Response(Auth::user(), 200);
+    }
 }
