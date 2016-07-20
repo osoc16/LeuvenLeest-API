@@ -44,7 +44,8 @@ class PlaceController extends Controller
     {
         $place = DB::table('places')
             ->join('categories', 'places.categoryId', '=', 'categories.id')
-            ->where('id',$id)
+            ->where('places.id', $id)
+            ->select('places.*', 'categories.name as category')
             ->first();
         if ($place)
         {
