@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\OpeningHours;
+use Illuminate\Http\Response;
 
 class OpeningHoursController extends Controller
 {
@@ -47,39 +48,78 @@ class OpeningHoursController extends Controller
     }
 
     public function addOpeningHours($id, Request $request){
-        if(property_exists($requesst, 'timeframes')){
-            try{
-                foreach($request->timeframes as $timeframe){
-                    foreach($timeframe->days as $day){
-                        $openinghours = new OpeningHours();
-                        $openinghours->placeId = $place->id;
-                        $openinghours->dayOfWeek = $day;
-                        $hourstring = '';
-                        foreach($timeframe->open as $open){
-                            $starthour =  intdiv(intval($open->start),100);
-                            $startminutes = intval($open->start)%100;
-                            $bitstart = (($starthour*self::MINUTES_PER_HOUR)+$startminutes)/self::DIVISION_UNIT;
-                            $hourstring .= str_repeat('0', $bitstart-strlen($hourstring));
-                            $endhour = intdiv(intval($open->end),100);
-                            $endminutes = intval($open->end)%100;
-                            if($endhour == 0 && $endminutes == 0){
-                                $endhour = 24;
-                            }
-                            $bitend = (($endhour*self::MINUTES_PER_HOUR)+$endminutes)/self::DIVISION_UNIT;
-                            $hourstring .= str_repeat('1', $bitend-$bitstart);
+        $exists = OpeningHours::where('placeId',$id)->first();
+        if(!$exists){
+            if($request->timeframes){
+                try{
+                    foreach($request->timeframes as $timeframe){
+                        foreach($timeframe['days'] as $day){
+                            $openinghours = new OpeningHours();
+                            $openinghours->placeId = $id;
+                            $openinghours->dayOfWeek = $day;
+                            $this->timeframeToHourstringAndSave($timeframe,$openinghours);
                         }
-                        $remainder = $totalHourStringLength-strlen($hourstring);
-                        $hourstring .= str_repeat('0', $remainder);
-                        $openinghours->hours = $hourstring;
-                        $openinghours->save();
                     }
+                    return new Response('openingHours added.',201);
+                } catch(Exception $ex){
+                    return new Response('We could not add the openinghours.',500);
                 }
-                return new Response('openingHours added.',201);
-            } catch(Exception $ex){
-                return new Response('We could not add the openinghours.',500);
+            } else {
+                return new Response('No timeframes received.',400);
             }
         } else {
-            return new Response('No timeframes received.',400);
+            return new Response('This place already has opening hours.',400);
         }
+    }
+
+    public function updateOpeningHours($id, Request $request){
+        $exists = OpeningHours::where('placeId',$id)->first();
+        if($exists){
+            if($request->timeframes){
+                try{
+                    foreach($request->timeframes as $timeframe){
+                        foreach($timeframe['days'] as $day){
+                            $openinghours = OpeningHours::where('dayOfWeek',$day)
+                                                ->where('placeId',$id)->first();
+                            if(!$openinghours){
+                                $openinghours = new OpeningHours();
+                                $openinghours->placeId = $id;
+                                $openinghours->dayOfWeek = $day;
+                            }
+                            $this->timeframeToHourstringAndSave($timeframe,$openinghours);
+                        }
+                    }
+                    return new Response('Opening Hours succesfully updated',200);
+                } catch (Exception $ex){
+                    return new Response('We could not change the openinghours.',500);
+                }
+            } else {
+                return new Response('No timeframes received.',400);
+            }
+        } else {
+            return new Response('This place does not have opening hours, you should ADD them first.',400);
+        }
+    }
+
+    private function timeframeToHourstringAndSave($timeframe,$openinghours){        
+        $totalHourStringLength = self::HOURS_IN_A_DAY*(self::MINUTES_PER_HOUR/self::DIVISION_UNIT);
+        $hourstring = '';
+        foreach($timeframe['open'] as $interval){
+            $starthour =  intdiv(intval($interval['start']),100);
+            $startminutes = intval($interval['start'])%100;
+            $bitstart = (($starthour*self::MINUTES_PER_HOUR)+$startminutes)/self::DIVISION_UNIT;
+            $hourstring .= str_repeat('0', $bitstart-strlen($hourstring));
+            $endhour = intdiv(intval($interval['end']),100);
+            $endminutes = intval($interval['end'])%100;
+            if($endhour == 0 && $endminutes == 0){
+                $endhour = 24;
+            }
+            $bitend = (($endhour*self::MINUTES_PER_HOUR)+$endminutes)/self::DIVISION_UNIT;
+            $hourstring .= str_repeat('1', $bitend-$bitstart);
+        }
+        $remainder = $totalHourStringLength-strlen($hourstring);
+        $hourstring .= str_repeat('0', $remainder);
+        $openinghours->hours = $hourstring;
+        $openinghours->save();  
     }
 }
