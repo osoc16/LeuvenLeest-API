@@ -169,11 +169,11 @@ class PlaceController extends Controller
         $hours = [];
         for($dayOfWeek = 0; $dayOfWeek < 7; $dayOfWeek++){
             //0 is Sunday like in the Carbon-class, Monday = 1, ...
+            $hoursThisDay = [];
             $hourString = OpeningHours::where('placeId',$id)
                                 ->where('dayOfWeek',$dayOfWeek)->first();
             if($hourString){
                 $hourString = $hourString->hours;
-                $hoursThisDay = [];
 
                 $open = FALSE;
                 $begin = '';
@@ -181,16 +181,16 @@ class PlaceController extends Controller
                 for($charnum = 0; $charnum < strlen($hourString); $charnum++){
                     $character = substr($hourString,$charnum,1);
                     if(!$open && $character === '1'){
-                        $begin = intdiv($charnum*self::MINUTES_PER_TIMESLOT,self::MINUTES_PER_HOUR).':'.($charnum*self::MINUTES_PER_TIMESLOT)%self::MINUTES_PER_HOUR;
+                        $begin = intdiv(($charnum+1)*self::MINUTES_PER_TIMESLOT,self::MINUTES_PER_HOUR).':'.(($charnum+1)*self::MINUTES_PER_TIMESLOT)%self::MINUTES_PER_HOUR;
                         $open = TRUE;
                     } else if($open && $character === '0'){
-                        $end = intdiv($charnum*self::MINUTES_PER_TIMESLOT,self::MINUTES_PER_HOUR).':'.($charnum*self::MINUTES_PER_TIMESLOT)%self::MINUTES_PER_HOUR;
+                        $end = intdiv(($charnum+1)*self::MINUTES_PER_TIMESLOT,self::MINUTES_PER_HOUR).':'.(($charnum+1)*self::MINUTES_PER_TIMESLOT)%self::MINUTES_PER_HOUR;
                         array_push($hoursThisDay, $begin.'-'.$end);
                         $open = FALSE;
                     }
                 }
-                $hours[$dayOfWeek] = $hoursThisDay;
             }
+            $hours[$dayOfWeek] = $hoursThisDay;
         }
         return $hours;
     }
