@@ -25,6 +25,12 @@ class UserController extends Controller
 
     public function getAccountDetails()
     {
-        return new Response(Auth::user(), 200);
+        $user = Auth::user();
+
+        if ($user)
+        {
+            return new Response($user, 200);
+        }
+        return new Response('Couldn\'t fetch the data', 500);
     }
 }
