@@ -43,9 +43,18 @@ class PlaceController extends Controller
     public function getPlaceById($id)
     {
         $place = DB::table('places')
+            ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->join('categories', 'places.categoryId', '=', 'categories.id')
             ->where('places.id', $id)
-            ->select('places.*', 'categories.name as category')
+            ->select(
+                'places.id',
+                'places.name',
+                'places.address',
+                'places.description',
+                'places.email',
+                'places.site',
+                'geolocations.*',
+                'categories.name as category')
             ->first();
         if ($place)
         {
