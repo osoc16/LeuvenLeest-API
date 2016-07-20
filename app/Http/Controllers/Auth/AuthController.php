@@ -77,16 +77,16 @@ class AuthController extends Controller
 
     public function postLogin(Request $request){
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])){
-            return ['oAuth_token' => JWTAuth::fromUser(Auth::user())];
+            return new Response(['oAuth_token' => JWTAuth::fromUser(Auth::user())],200);
         }
-        return 'wrong logindata';
+        return new Response('wrong logindata',404);
     }
 
     public function logout(){
         if(Auth::check()){
             JWTAuth::invalidate(JWTAuth::getToken());
             Auth::logout();
-            return 'Successfully logged out.';
+            return new Response('Successfully logged out.',200);
         }
     }
 
@@ -118,7 +118,7 @@ class AuthController extends Controller
 
         $user = Auth::attempt(['email' => $user->email, 'password' => $pass], true);
 
-        return ['oAuth_token' => JWTAuth::fromUser($user)];
+        return new Response(['oAuth_token' => JWTAuth::fromUser($user)],200);
     }
 
     public function postRegister(Request $request){
@@ -139,7 +139,7 @@ class AuthController extends Controller
             ]);
 
         if($user){
-            return ['oAuth_token' => JWTAuth::fromUser($user)];
+            return new Response(['oAuth_token' => JWTAuth::fromUser($user)],200);
         }
     }
 }
