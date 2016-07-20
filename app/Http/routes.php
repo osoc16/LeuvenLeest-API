@@ -51,5 +51,6 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
     // Users
     Route::get('/user/{id}','UserController@getUserById')->where('id', '[0-9]+');
+    Route::get('/user/current', 'UserController@getAccountDetails');
 });
 
