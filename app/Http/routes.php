@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 | and give it the controller to call when that URI is requested.
 |
 */
-header('Access-Control-Allow-Origin: http://localhost:8000');
+header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
 
@@ -31,7 +31,7 @@ Route::put('/auth/register', 'Auth\AuthController@postRegister');
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
 Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
-Route::group(['middleware' => ['jwt.auth']], function () {
+//Route::group(['middleware' => ['jwt.auth']], function () {
     //Place
     Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory')->where('categoryId', '[0-9]+');
     Route::get('/places/{id}/photos','PhotoController@getPictures')->where('id', '[0-9]+');
@@ -51,4 +51,4 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
     // Users
     Route::get('/user/{id}','UserController@getUserById')->where('id', '[0-9]+');
-});
+//});
