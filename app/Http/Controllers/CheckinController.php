@@ -102,6 +102,6 @@ class CheckinController extends Controller
         {
             return new Response($places, 200);
         }
-        return new Response('You haven\'t checked in yet', 404);
+        return new Response('You haven\'t checked in yet', 400);
     }
 }
