@@ -151,7 +151,6 @@ class OpeningHoursSeeder extends Seeder
         $totalHourStringLength = self::HOURS_IN_A_DAY*(self::MINUTES_PER_HOUR/self::DIVISION_UNIT);
         $places = DB::table('places')->get();
         foreach($places as $place){
-            //echo $place->name;
             $hours = json_decode(file_get_contents(
                 'https://api.foursquare.com/v2/venues/'.$place->foursquareId.'/hours'
                 .'?client_id='.env('FOURSQUARE_CLIENT_ID','')
@@ -178,7 +177,6 @@ class OpeningHoursSeeder extends Seeder
                             $bitend = (($endhour*self::MINUTES_PER_HOUR)+$endminutes)/self::DIVISION_UNIT;
                             $hourstring .= str_repeat('1', $bitend-$bitstart);
                         }
-                        //echo ' remainder: '.$totalHourStringLength.'-'.strlen($hourstring);
                         $remainder = $totalHourStringLength-strlen($hourstring);
                         $hourstring .= str_repeat('0', $remainder);
                         $openinghours->hours = $hourstring;
