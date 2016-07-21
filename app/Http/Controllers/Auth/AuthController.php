@@ -117,7 +117,7 @@ class AuthController extends Controller
                     'password' => $pass, ]);
         }
 
-        $user = Auth::attempt(['email' => $user->email, 'password' => $pass], true);
+        $user = Auth::attempt(['email' => $user->email, 'password' => $pass]);
 
         if (!$user)
         {

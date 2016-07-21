@@ -29,7 +29,7 @@ Route::put('/auth/register', 'Auth\AuthController@postRegister');
 
 // oAuth routes
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
-Route::get('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
+Route::post('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     //Place
