@@ -119,6 +119,11 @@ class AuthController extends Controller
 
         $user = Auth::attempt(['email' => $user->email, 'password' => $pass], true);
 
+        if (!$user)
+        {
+            return new Response('There already exists an account for this email', 401);
+        }
+
         return new Response(['oAuth_token' => JWTAuth::fromUser($user)],200);
     }
 
