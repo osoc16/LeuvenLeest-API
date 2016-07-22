@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Place;
+use App\OpeningHours;
 use App\Providers\FoursquareProvider;
 use \DB;
 use Validator;
@@ -13,9 +14,11 @@ use App\Geolocation;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Response;
+use App\Http\Controllers\OpeningHoursController;
+
 
 class PlaceController extends Controller
-{
+{    
     public function store(Request $request)
     {
         $expected = [
@@ -59,6 +62,8 @@ class PlaceController extends Controller
             ->first();
         if ($place)
         {
+            $hours = OpeningHours::where('placeId',$id)->get();
+            $place->openingHours = $hours ? (new OpeningHoursController)->getOpeningHours($id) : '';
             $place = json_encode($place);
             return new Response($place, 200);
         }

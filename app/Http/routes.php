@@ -38,6 +38,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('/places/{id}/addToFavourites','FavouriteController@addToFavourites')->where('id', '[0-9]+');
     Route::post('/places/{id}/removeFromFavourites','FavouriteController@removeFromFavourites')->where('id', '[0-9]+');
     Route::post('/places/{id}/uploadPhoto','PhotoController@uploadPhoto')->where('id','[0-9]+');
+    Route::post('/places/{id}/addOpeningHours','OpeningHoursController@addOpeningHours')->where('id','[0-9]+');
+    Route::post('/places/{id}/updateOpeningHours','OpeningHoursController@updateOpeningHours')->where('id','[0-9]+');
     Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
     Route::get('/places/trending', 'PlaceController@getTrendingPlaces');
     Route::get('/places/favourite', 'FavouriteController@getFavouritePlaces');
