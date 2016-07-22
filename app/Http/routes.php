@@ -32,7 +32,7 @@ Route::put('/auth/register', 'Auth\AuthController@postRegister');
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
 Route::post('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
-//Route::group(['middleware' => ['jwt.auth']], function () {
+Route::group(['middleware' => ['jwt.auth']], function () {
     //Place
     Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory')->where('categoryId', '[0-9]+');
     Route::get('/places/{id}/photos','PhotoController@getPictures')->where('id', '[0-9]+');
@@ -62,4 +62,4 @@ Route::post('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
     Route::get('/evaluations/rating/{placeId}','QuestionsController@getRating');
     Route::get('/evaluations/{id}','QuestionsController@getEvaluations');
     Route::get('/evaluate/{placeId}/{questionId}/{vote}','QuestionsController@evaluate');
-//});
+});
