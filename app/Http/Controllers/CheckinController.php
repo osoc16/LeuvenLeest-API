@@ -92,8 +92,19 @@ class CheckinController extends Controller
         $places = DB::table('checkins')
             ->join('places','checkins.placeId','=','places.id')
                         ->where('checkins.userId', $id)
-
-            ->select('places.*')
+            ->join('photos', 'places.photoId', '=', 'photos.id')
+            ->select(
+                'places.id',
+                'places.name',
+                'places.address',
+                'places.description',
+                'places.email',
+                'places.site',
+                'geolocations.*',
+                'categories.name as category',
+                'categories.icon',
+                'photos.name as photo'
+                )
             ->groupBy('places.id')
             ->orderBy('checkins.updated_at', 'DESC')
             ->take(6)
