@@ -48,6 +48,7 @@ class PlaceController extends Controller
         $place = DB::table('places')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->join('categories', 'places.categoryId', '=', 'categories.id')
+            ->join('photos', 'places.photoId', '=', 'photos.id')
             ->where('places.id', $id)
             ->select(
                 'places.id',
@@ -57,7 +58,8 @@ class PlaceController extends Controller
                 'places.email',
                 'places.site',
                 'geolocations.*',
-                'categories.name as category'
+                'categories.name as category',
+                'photos.name as photo'
                 )
             ->first();
         if ($place)
@@ -75,6 +77,7 @@ class PlaceController extends Controller
         $places = DB::table('places')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->join('categories', 'places.categoryId', '=', 'categories.id')
+            ->join('photos', 'places.photoId', '=', 'photos.id')
             ->select(
                 'places.id',
                 'places.name',
@@ -83,7 +86,8 @@ class PlaceController extends Controller
                 'places.email',
                 'places.site',
                 'geolocations.*',
-                'categories.name as category'
+                'categories.name as category',
+                'photos.name as photo'
                 )
             ->get();
 
@@ -95,6 +99,7 @@ class PlaceController extends Controller
         $places = DB::table('categories')
             ->join('places', 'places.categoryId', '=', 'categories.id')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
+            ->join('photos', 'places.photoId', '=', 'photos.id')
             ->where('places.categoryId', $categoryId)
             ->select(
                 'places.id',
@@ -105,7 +110,8 @@ class PlaceController extends Controller
                 'places.site',
                 'geolocations.*',
                 'categories.name as category',
-                'categories.icon'
+                'categories.icon',
+                'photos.name as photo'
                 )
             ->get();
 

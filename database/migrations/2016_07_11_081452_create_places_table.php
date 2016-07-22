@@ -26,6 +26,8 @@ class CreatePlacesTable extends Migration
             $table->integer('categoryId')->unsigned()->nullable();
             $table->foreign('categoryId')->references('id')->on('categories')->onDelete('set null');
             $table->string('site')->nullable();
+            $table->integer('photoId')->unsigned();
+            $table->foreign('photoId')->references('id')->on('photos')->onDelete('cascade');
             $table->timestamps();
         });
     }

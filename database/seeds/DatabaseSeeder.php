@@ -16,11 +16,25 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        $this->call(UsersSeeder::class);
         $this->call(GeolocationSeeder::class);
         $this->call(CategorySeeder::class);
+        $this->call(PhotosSeeder::class);
         $this->call(PlaceSeeder::class);
         $this->call(OpeningHoursSeeder::class);
         $this->call(QuestionSeeder::class);
+    }
+}
+
+class UsersSeeder extends Seeder
+{
+    public function run()
+    {
+        DB::table('users')->insert([[
+            'name' => 'tester',
+            'email' => 'tester@tester.be',
+            'password' => 'tester'
+        ]]);
     }
 }
 
@@ -91,6 +105,7 @@ class PlaceSeeder extends Seeder
      */
     public function run()
     {
+        $i = 0;
         $response = json_decode(file_get_contents(
             $this::ENDPOINT_URL
             .'?client_id='.env('FOURSQUARE_CLIENT_ID','')
@@ -123,6 +138,7 @@ class PlaceSeeder extends Seeder
             $url = property_exists($fullvenue, 'url') ? $fullvenue->url : '';
             $description = property_exists($fullvenue, 'description') ? $fullvenue->description : '';
 
+            $i++;
             $place = new Place();
             $place->name = $fullvenue->name;
             $place->geoId = $geo->id;
@@ -131,6 +147,7 @@ class PlaceSeeder extends Seeder
             $place->email = '';
             $place->site = $url;
             $place->categoryId = $categoryid;
+            $place->photoId = $i;
             $place->address = $fullvenue->location->formattedAddress[0];
             $place->save();
         }
@@ -209,6 +226,20 @@ class QuestionSeeder extends Seeder
                                                    'ratingBad' => 0,
                                                    'votes' => 0]]);
             }
+        }
+    }
+}
+
+class PhotosSeeder extends Seeder
+{
+    public function run()
+    {
+        for ($i = 1; $i <= 30; $i++)
+        {
+            DB::table('photos')->insert([[
+                'userId' => 1,
+                'name' => 'http://www.leuven.be/binaries/Stadhuis-CoprightLaylaAerts_tcm16-24398.jpg'
+            ]]);
         }
     }
 }
