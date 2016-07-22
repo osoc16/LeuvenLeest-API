@@ -182,6 +182,23 @@ class PlaceController extends Controller
         {
             return new Response('We are not able to create a new place.', 500);
         }
+
+        //Add evaluations
+        try
+        {
+            for ($i = 0; $i < 4; $i++)
+            {
+                $evaluation = new Evaluation();
+                $evaluation->placeId = $input['placeId'];
+                $evaluation->save();
+            }
+
+            return new Response(json_encode($evaluation), 201);
+
+        } catch (Exception $ex)
+        {
+            return new Response('We are not able to create a new evaluation.', 500);
+        }
     }
 
     private function getRulesForValidation()

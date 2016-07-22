@@ -54,5 +54,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     // Users
     Route::get('/user/{id}','UserController@getUserById')->where('id', '[0-9]+');
     Route::get('/user/current', 'UserController@getAccountDetails');
+
+    // Questions
+    Route::get('/questions/get','QuestionsController@getRandomQuestion');
+    Route::get('/questions','QuestionsController@getQuestions');
+    Route::get('/evaluations/rating/{placeId}','QuestionsController@getRating');
+    Route::get('/evaluations/{id}','QuestionsController@getEvaluations');
+    Route::get('/evaluate/{placeId}/{questionId}/{vote}','QuestionsController@evaluate');
 });
+
 
