@@ -15,6 +15,7 @@ body {
 			-webkit-margin-before: 0em;
     		-webkit-margin-after: 0em;
     		-webkit-padding-start: 0px;
+            overflow: hidden;
 
     		li {
     			padding: 2px;
@@ -32,10 +33,12 @@ body {
     		ul {
     			padding-left: 10px;
     			list-style-type: none;
+                height: 0;
 
     			ul {
     				padding-left: 20px;
     				list-style-type: none;
+                    height: auto;
 	    		}
     		}
 		}

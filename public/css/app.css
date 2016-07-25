@@ -11,7 +11,8 @@ body {
     #all nav ul {
       -webkit-margin-before: 0em;
       -webkit-margin-after: 0em;
-      -webkit-padding-start: 0px; }
+      -webkit-padding-start: 0px;
+      overflow: hidden; }
       #all nav ul li {
         padding: 2px; }
         #all nav ul li a {
@@ -21,10 +22,12 @@ body {
           text-decoration: underline; }
       #all nav ul ul {
         padding-left: 10px;
-        list-style-type: none; }
+        list-style-type: none;
+        height: 0; }
         #all nav ul ul ul {
           padding-left: 20px;
-          list-style-type: none; }
+          list-style-type: none;
+          height: auto; }
   #all #content {
     width: 900px;
     float: right;
