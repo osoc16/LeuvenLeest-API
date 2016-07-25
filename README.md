@@ -2,7 +2,7 @@
 The backend API for the LeuvenLeest project of Cultuurconnect. It is about discovering nice reading locations in Louvain and the API provides the endpoints for places, users, photos.
 
 ##Documentation
-The documentation can be found on [api.leuvenleestapp.be](http://api.leuvenleestapp.be "LeuvenLeest API site")
+The documentation can be found on [api.leuvenleestapp.be](http://api.leuvenleestapp.be "LeuvenLeest API site") or in the [welcome view](resources/views/welcome.blade.php)
 
 ##Example
 ```
