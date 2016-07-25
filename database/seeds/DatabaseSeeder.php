@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call(UsersSeeder::class);
         $this->call(CategorySeeder::class);
-        $this->call(PhotosSeeder::class);
         $this->call(PlaceSeeder::class);
+        $this->call(PhotosSeeder::class);
         $this->call(OpeningHoursSeeder::class);
         $this->call(QuestionSeeder::class);
     }
@@ -244,10 +244,11 @@ class PhotosSeeder extends Seeder
 {
     public function run()
     {
-        for ($i = 1; $i <= 30; $i++)
-        {
+        $places = DB::table('places')->get();
+        foreach($places as $place){
             DB::table('photos')->insert([[
                 'userId' => 1,
+                'placeId' => $place->id,
                 'name' => 'http://www.leuven.be/binaries/Stadhuis-CoprightLaylaAerts_tcm16-24398.jpg'
             ]]);
         }
