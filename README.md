@@ -1,34 +1,8 @@
-# boekdelen
-Cultuurconnect boekdelen project
+# LeuvenLeest API
+The backend API for the LeuvenLeest project of Cultuurconnect. It is about discovering nice reading locations in Louvain and the API provides the endpoints for places, users, photos.
 
-
-#Debugbar
-```
-https://github.com/barryvdh/laravel-debugbar
-```
-
-##Install
-Add on top of file
-```
- use Debugbar;
-```
-
-##How to use
-Example
-```
-Debugbar::info('Test');
-```
-
-Other options
-```
-Debugbar::info($object);
-Debugbar::error('Error!');
-Debugbar::warning('Watch out…');
-Debugbar::addMessage('Another message', 'mylabel');
-```
-
-
-#API
+##Documentation
+The documentation can be found on [api.leuvenleestapp.be](http://api.leuvenleestapp.be "LeuvenLeest API site")
 
 ##Example
 ```
@@ -55,22 +29,10 @@ $.ajax({
 })
 ```
 
-##Routes
-###Places
-Create a new place. You need to send the name, latitude and longitude.
-```
-Route::put('/places/add/{name}/{latitude}/{longitude}','PlaceController@addPlace');
-```
-```
-Route::get('places/{id}','PlaceController@getPlaceById');
-```
-```
-Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
-```
-###Checkins
-```
-Route::put('/checkin/{foursquareId}/{latitude}/{longitude}','CheckinController@checkin');
-```
-```
-Route::get('/getLatestCheckin','CheckinController@getLatestCheckin');
-```
+##Contributing
+The best ways to contribute are
+* Open [issues/tickets](../../issues)
+* Submit fixes and/or improvements with [Pull Requests](../../pulls)
+
+##License
+See [LICENSE](LICENSE)
