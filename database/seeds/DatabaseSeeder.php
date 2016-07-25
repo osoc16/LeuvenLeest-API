@@ -16,49 +16,24 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        $this->call(UsersSeeder::class);
         $this->call(CategorySeeder::class);
+        $this->call(PhotosSeeder::class);
         $this->call(PlaceSeeder::class);
         $this->call(OpeningHoursSeeder::class);
         $this->call(QuestionSeeder::class);
     }
 }
 
-class GeolocationSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
-
-    const ENDPOINT_URL = 'https://api.foursquare.com/v2/venues/search';
-    const LOCATION = 'Leuven';
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        $categories = ['4bf58dd8d48988d163941735','4bf58dd8d48988d1e0931735','4bf58dd8d48988d1a7941735','4bf58dd8d48988d12f941735'];
-        foreach($categories as $category){  
-            $response = json_decode(file_get_contents(
-                $this::ENDPOINT_URL
-                .'?client_id='.env('FOURSQUARE_CLIENT_ID','')
-                .'&client_secret='.env('FOURSQUARE_CLIENT_KEY','')
-                .'&ll=50.8798,4.7005'
-                .'&v=20150806&m=foursquare'
-                .'&radius=5000'
-                .'&intent=checkin'
-                .'&categoryId='.$category
-                .'&near='.$this::LOCATION))->response;
-
-            $venues = $response->venues;
-
-            foreach($venues as $venue){
-                $exists = DB::table('geolocations')->where('longitude',$venue->location->lng)
-                    ->where('latitude',$venue->location->lat)->get();
-                if(!$exists){
-                    DB::table('geolocations')->insert([['latitude' => $venue->location->lat,
-                                                        'longitude' => $venue->location->lng]]);
-                }
-            }
-        }
+        DB::table('users')->insert([[
+            'name' => 'tester',
+            'email' => 'tester@tester.be',
+            'password' => 'tester'
+        ]]);
     }
 }
 
@@ -261,6 +236,20 @@ class QuestionSeeder extends Seeder
                                                    'ratingBad' => 0,
                                                    'votes' => 0]]);
             }
+        }
+    }
+}
+
+class PhotosSeeder extends Seeder
+{
+    public function run()
+    {
+        for ($i = 1; $i <= 30; $i++)
+        {
+            DB::table('photos')->insert([[
+                'userId' => 1,
+                'name' => 'http://www.leuven.be/binaries/Stadhuis-CoprightLaylaAerts_tcm16-24398.jpg'
+            ]]);
         }
     }
 }

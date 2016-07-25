@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
+header('Access-Control-Allow-Methods: POST, GET, PUT, ACTIONS');
 
 
 Route::get('/', function () {
@@ -62,5 +63,3 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/evaluations/{id}','QuestionsController@getEvaluations');
     Route::get('/evaluate/{placeId}/{questionId}/{vote}','QuestionsController@evaluate');
 });
-
-
