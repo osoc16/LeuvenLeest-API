@@ -32,6 +32,9 @@ Route::put('/auth/register', 'Auth\AuthController@postRegister');
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
 Route::post('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
+//Places endpoints needed when not logged in yet
+Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
+
 Route::group(['middleware' => ['jwt.auth']], function () {
     //Place
     Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory')->where('categoryId', '[0-9]+');
@@ -41,7 +44,6 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::post('/places/{id}/uploadPhoto','PhotoController@uploadPhoto')->where('id','[0-9]+');
     Route::post('/places/{id}/addOpeningHours','OpeningHoursController@addOpeningHours')->where('id','[0-9]+');
     Route::post('/places/{id}/updateOpeningHours','OpeningHoursController@updateOpeningHours')->where('id','[0-9]+');
-    Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
     Route::get('/places/trending', 'PlaceController@getTrendingPlaces');
     Route::get('/places/favourite', 'FavouriteController@getFavouritePlaces');
     Route::put('/places/add','PlaceController@store');
