@@ -93,6 +93,7 @@ class CheckinController extends Controller
             ->join('places','checkins.placeId','=','places.id')
             ->join('photos', 'places.photoId', '=', 'photos.id')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
+            ->join('categories', 'categories.id', '=', 'places.categoryId')
             ->where('checkins.userId', $id)
             ->select(
                 'places.id',
