@@ -91,7 +91,7 @@ class CheckinController extends Controller
         $id = Auth::user()->id;
         $places = DB::table('checkins')
             ->join('places','checkins.placeId','=','places.id')
-            ->join('photos', 'places.photoId', '=', 'photos.id')
+            ->join('photos', 'places.id', '=', 'photos.placeId')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->join('categories', 'categories.id', '=', 'places.categoryId')
             ->where('checkins.userId', $id)
