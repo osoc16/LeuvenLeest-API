@@ -32,8 +32,10 @@ Route::put('/auth/register', 'Auth\AuthController@postRegister');
 Route::get('auth/login/{client}', 'Auth\AuthController@login');
 Route::post('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 
-//Route::group(['middleware' => ['jwt.auth']], function () {
+//Places endpoints needed when not logged in yet
+Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
 
+Route::group(['middleware' => ['jwt.auth']], function () {
     //Place
     Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory')->where('categoryId', '[0-9]+');
     Route::get('/places/{id}/photos','PhotoController@getPictures')->where('id', '[0-9]+');
@@ -42,7 +44,6 @@ Route::post('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
     Route::post('/places/{id}/uploadPhoto','PhotoController@uploadPhoto')->where('id','[0-9]+');
     Route::post('/places/{id}/addOpeningHours','OpeningHoursController@addOpeningHours')->where('id','[0-9]+');
     Route::post('/places/{id}/updateOpeningHours','OpeningHoursController@updateOpeningHours')->where('id','[0-9]+');
-    Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
     Route::get('/places/trending', 'PlaceController@getTrendingPlaces');
     Route::get('/places/favourite', 'FavouriteController@getFavouritePlaces');
     Route::put('/places/add','PlaceController@store');
@@ -64,4 +65,4 @@ Route::post('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
     Route::get('/evaluations/{id}','QuestionsController@getEvaluations');
     Route::get('/evaluate/{placeId}/{questionId}/{vote}','QuestionsController@evaluate');
     
-//});
+});
