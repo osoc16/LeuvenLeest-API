@@ -35,7 +35,7 @@ Route::post('auth/loginCallback/{client}', 'Auth\AuthController@loginCallback');
 //Places endpoints needed when not logged in yet
 Route::get('/places/{lat}/{lng}','PlaceController@getPlaces');
 
-Route::group(['middleware' => ['jwt.auth']], function () {
+Route::group(['middleware' => ['jwt.auth','jwt.refresh']], function () {
     //Place
     Route::get('/places/getPlacesByCategory/{categoryId}/{lat}/{lng}','PlaceController@getPlacesByCategory')->where('categoryId', '[0-9]+');
     Route::get('/places/{id}/photos','PhotoController@getPictures')->where('id', '[0-9]+');
