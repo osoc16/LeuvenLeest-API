@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
-header('Access-Control-Allow-Methods: POST, GET, PUT, ACTIONS');
+header('Access-Control-Allow-Methods: POST, GET, PUT');
+header('Access-Control-Expose-Headers: Authorization');
 
 
 Route::get('/', function () {
@@ -64,5 +65,5 @@ Route::group(['middleware' => ['jwt.auth','jwt.refresh']], function () {
     Route::get('/evaluations/rating/{placeId}','QuestionsController@getRating');
     Route::get('/evaluations/{id}','QuestionsController@getEvaluations');
     Route::get('/evaluate/{placeId}/{questionId}/{vote}','QuestionsController@evaluate');
-    
+
 });
