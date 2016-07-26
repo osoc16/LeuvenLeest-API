@@ -56,7 +56,7 @@ Route::group(['middleware' => ['jwt.auth','jwt.refresh']], function () {
 
     // Users
     Route::get('/user/{id}','UserController@getUserById')->where('id', '[0-9]+');
-    Route::post('/user/current', 'UserController@getAccountDetails');
+    Route::get('/user/current', 'UserController@getAccountDetails');
 
     // Questions
     Route::get('/questions/get','QuestionsController@getRandomQuestion');
