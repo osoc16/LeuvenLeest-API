@@ -48,7 +48,7 @@ class PlaceController extends Controller
         $place = DB::table('places')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->join('categories', 'places.categoryId', '=', 'categories.id')
-            ->join('photos', 'places.id', '=', 'photos.placeId')
+            ->leftjoin('photos', 'places.id', '=', 'photos.placeId')
             ->where('places.id', $id)
             ->select(
                 'places.id',
@@ -77,7 +77,7 @@ class PlaceController extends Controller
         $places = DB::table('places')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->join('categories', 'places.categoryId', '=', 'categories.id')
-            ->join('photos', 'places.id', '=', 'photos.placeId')
+            ->leftjoin('photos', 'places.id', '=', 'photos.placeId')
             ->select(
                 'places.id',
                 'places.name',
@@ -99,7 +99,7 @@ class PlaceController extends Controller
         $places = DB::table('categories')
             ->join('places', 'places.categoryId', '=', 'categories.id')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
-            ->join('photos', 'places.id', '=', 'photos.placeId')
+            ->leftjoin('photos', 'places.id', '=', 'photos.placeId')
             ->where('places.categoryId', $categoryId)
             ->select(
                 'places.id',
