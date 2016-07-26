@@ -11,6 +11,12 @@ use \JWTAuth;
 
 class UserController extends Controller
 {
+    private $jwtauth;
+
+    public function __construct(JWTAuth $jwtauth)
+    {
+        $this->jwtauth = $jwtauth;
+    }
     // get user by id
     public function getUserById($id)
     {
@@ -26,12 +32,9 @@ class UserController extends Controller
 
     public function getAccountDetails()
     {
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $this->jwtauth->toUser();
+        return new Response($user, 200);
 
-        if ($user)
-        {
-            return new Response($user, 200);
-        }
-        return new Response('Couldn\'t fetch the data', 500);
+        //return new Response('Couldn\'t fetch the data', 500);
     }
 }
