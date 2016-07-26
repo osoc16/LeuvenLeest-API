@@ -521,6 +521,7 @@
 				<p>Required data:</p>
 		    	<p class="quote">
 					&emsp;"data": {<br>
+					&emsp;&emsp;"id": "<strong>PLACE_ID</strong>"
 					&emsp;&emsp;"latitude": "<strong>LATITUDE</strong>",<br>
 					&emsp;&emsp;"longitude": "<strong>LONGITUDE</strong>"<br>
 					&emsp;}
