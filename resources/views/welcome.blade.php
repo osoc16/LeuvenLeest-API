@@ -266,7 +266,7 @@
 		    		get the latest created checkins
 		    	</p>
 		    	<p class="quote">
-		    		"url": "http://95.85.15.210/checkin/latest/<strong>USER_ID</strong>",<br>
+		    		"url": "http://95.85.15.210/checkin/latest/",<br>
 		    		"method": "GET"
 		    	</p>
 
@@ -275,7 +275,7 @@
 		    		get the latest updated checkins
 		    	</p>
 		    	<p class="quote">
-		    		"url": "http://95.85.15.210/checkin/recent/<strong>USER_ID</strong>",<br>
+		    		"url": "http://95.85.15.210/checkin/recent/",<br>
 		    		"method": "GET"
 		    	</p>
 
