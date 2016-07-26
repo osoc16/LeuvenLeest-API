@@ -9,6 +9,7 @@ use \Auth;
 use \DB;
 use Validator;
 use Illuminate\Http\Response;
+use \JWTAuth;
 
 class CheckinController extends Controller
 {
@@ -88,7 +89,7 @@ class CheckinController extends Controller
 
     public function getRecentCheckins()
     {
-        $id = Auth::user()->id;
+        $id = Auth::toUser()->id;
         $places = DB::table('checkins')
             ->join('places','checkins.placeId','=','places.id')
             ->join('photos', 'places.id', '=', 'photos.placeId')

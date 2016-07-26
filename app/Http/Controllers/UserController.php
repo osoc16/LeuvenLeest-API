@@ -7,6 +7,7 @@ use App\Http\Requests;
 use \Auth;
 use \DB;
 use Illuminate\Http\Response;
+use \JWTAuth;
 
 class UserController extends Controller
 {
