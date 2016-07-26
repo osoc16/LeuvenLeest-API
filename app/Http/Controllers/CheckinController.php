@@ -89,7 +89,7 @@ class CheckinController extends Controller
 
     public function getRecentCheckins()
     {
-        $id = Auth::toUser()->id;
+        $id = JWTAuth::toUser()->id;
         $places = DB::table('checkins')
             ->join('places','checkins.placeId','=','places.id')
             ->join('photos', 'places.id', '=', 'photos.placeId')
