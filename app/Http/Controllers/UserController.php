@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function getAccountDetails()
     {
-        $user = JWTAuth::parseToken()->toUser();
+        $user = JWTAuth::parseToken()->authenticate();
 
         if ($user)
         {
