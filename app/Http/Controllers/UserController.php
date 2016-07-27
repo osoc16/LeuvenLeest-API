@@ -7,6 +7,7 @@ use App\Http\Requests;
 use \Auth;
 use \DB;
 use Illuminate\Http\Response;
+use \JWTAuth;
 
 class UserController extends Controller
 {
@@ -25,7 +26,7 @@ class UserController extends Controller
 
     public function getAccountDetails()
     {
-        $user = Auth::user();
+        $user = JWTAuth::parseToken()->authenticate();
 
         if ($user)
         {
