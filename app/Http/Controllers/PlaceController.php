@@ -154,7 +154,7 @@ class PlaceController extends Controller{
             $place->distance = $meters;
         }
 
-        usort($places, function($a, $z) { return $a->distance < $z->distance; });
+        usort($places, function($a, $z) { return $a->distance > $z->distance; });
         return $places;
     }
 
