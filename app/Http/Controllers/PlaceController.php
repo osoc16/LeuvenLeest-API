@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Place;
 use App\OpeningHours;
+use App\Http\Controllers\Auth\AuthController;
 use App\Providers\FoursquareProvider;
 use \DB;
 use Validator;
@@ -15,10 +16,11 @@ use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Response;
 use App\Http\Controllers\OpeningHoursController;
+use \JWTAuth;
 
 
-class PlaceController extends Controller
-{    
+class PlaceController extends Controller{
+
     public function store(Request $request)
     {
         $expected = [
@@ -67,7 +69,7 @@ class PlaceController extends Controller
             $hours = OpeningHours::where('placeId',$id)->get();
             $place->openingHours = $hours ? (new OpeningHoursController)->getOpeningHours($id) : '';
             $place = json_encode($place);
-            return new Response($place, 200);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$place,200);
         }
         return new Response('Place not found', 400);
     }
@@ -116,7 +118,7 @@ class PlaceController extends Controller
                 )
             ->get();
 
-        return new Response($this->sortByDistance($places, $lat, $lng), 200);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$this->sortByDistance($places, $lat, $lng),200);
     }
 
     public function getTrendingPlaces()
@@ -129,7 +131,7 @@ class PlaceController extends Controller
             ->orderBy('checkin_count', 'DESC')
             ->take(5)
             ->get();
-            return new Response($places, 200);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$place,200);
     }
 
     private function sortByDistance($places, $lat, $lng)
@@ -152,7 +154,7 @@ class PlaceController extends Controller
             $place->distance = $meters;
         }
 
-        usort($places, function($a, $z) { return $a->distance > $z->distance; });
+        usort($places, function($a, $z) { return $a->distance < $z->distance; });
         return $places;
     }
 
@@ -183,7 +185,7 @@ class PlaceController extends Controller
             $place->site = $input['site'];
             $place->geoId = $geoLocation['id'];
             $place->save();
-            return new Response(json_encode($place), 201);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),json_encode($place),201);
 
         } catch (Exception $ex)
         {

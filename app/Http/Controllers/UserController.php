@@ -8,6 +8,7 @@ use \Auth;
 use \DB;
 use Illuminate\Http\Response;
 use \JWTAuth;
+use App\Http\Controllers\Auth\AuthController;
 
 class UserController extends Controller
 {
@@ -19,9 +20,9 @@ class UserController extends Controller
             ->get();
         if ($userData)
         {
-            return new Response(json_encode($userData), 200);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),json_encode($userData), 200);
         }
-        return new Response('We didn\'t found an user with this id', 404);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We didn\'t found an user with this id', 404);
     }
 
     public function getAccountDetails()
@@ -30,8 +31,8 @@ class UserController extends Controller
 
         if ($user)
         {
-            return new Response($user, 200);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$user, 200);
         }
-        return new Response('Couldn\'t fetch the data', 500);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'Couldn\'t fetch the data', 500);
     }
 }

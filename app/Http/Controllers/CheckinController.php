@@ -10,6 +10,7 @@ use \DB;
 use Validator;
 use Illuminate\Http\Response;
 use \JWTAuth;
+use App\Http\Controllers\Auth\AuthController;
 
 class CheckinController extends Controller
 {
@@ -71,9 +72,9 @@ class CheckinController extends Controller
             $checkin->userId = Auth::user()->id;
             $checkin->save();
         } catch(Exception $ex) {
-            return new Response('We weren\'t able to create a new place.', 500);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We weren\'t able to create a new place.', 500);
         }
-        return new Response(json_encode($checkin), 201);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),json_encode($checkin), 201);
     }
 
     public function getLatestCheckin()
@@ -82,9 +83,9 @@ class CheckinController extends Controller
         $checkin  = DB::table('checkins')->where('userId', $id)->orderBy('created_at', 'DESC')->first();
         if ($checkin)
         {
-            return new Response(json_encode($checkin), 200);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),json_encode($checkin), 200);
         }
-        return new Response('You haven\'t checked in yet.', 404);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'You haven\'t checked in yet.', 404);
     }
 
     public function getRecentCheckins()
@@ -113,6 +114,6 @@ class CheckinController extends Controller
             ->take(6)
             ->get();
 
-            return new Response($places, 200);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$places, 200);
     }
 }

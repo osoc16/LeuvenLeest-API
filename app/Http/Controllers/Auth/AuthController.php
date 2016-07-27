@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use \JWTAuth;
 use Illuminate\Http\Response;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -43,6 +44,9 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        if ((\App::environment() == 'testing') && array_key_exists("HTTP_AUTHORIZATION",  \Request::server())) {
+            JWTAuth::setRequest(\Route::getCurrentRequest());
+        }
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
@@ -85,7 +89,7 @@ class AuthController extends Controller
 
     public function logout(){
         if(Auth::check()){
-            JWTAuth::invalidate(JWTAuth::getToken());
+            //JWTAuth::invalidate(JWTAuth::getToken());
             Auth::logout();
             return new Response('Successfully logged out.',200);
         }
@@ -147,5 +151,14 @@ class AuthController extends Controller
         if($user){
             return new Response(['oAuth_token' => JWTAuth::fromUser($user)],200);
         }
+    }
+
+    public function checkToken($token,$tokenpayload,$toReturn,$returncode){     
+        $now = Carbon::now()->timestamp;
+        $expiring = $tokenpayload['exp'];
+        if(($expiring - Carbon::now()->timestamp) <= 10*60){
+            return new Response(['oAuth_token' => JWTAuth::refresh($token), 'data' => $toReturn],$returncode);
+        }
+        return new Response(['data' => $toReturn],$returncode);
     }
 }

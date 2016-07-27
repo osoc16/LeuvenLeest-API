@@ -60,15 +60,15 @@ class OpeningHoursController extends Controller
                             $this->timeframeToHourstringAndSave($timeframe,$openinghours);
                         }
                     }
-                    return new Response('openingHours added.',201);
+                    return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'openingHours added.',201);
                 } catch(Exception $ex){
-                    return new Response('We could not add the openinghours.',500);
+                    return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We could not add the openinghours.',500);
                 }
             } else {
-                return new Response('No timeframes received.',400);
+                return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'No timeframes received.',400);
             }
         } else {
-            return new Response('This place already has opening hours.',400);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'This place already has opening hours.',400);
         }
     }
 
@@ -89,15 +89,15 @@ class OpeningHoursController extends Controller
                             $this->timeframeToHourstringAndSave($timeframe,$openinghours);
                         }
                     }
-                    return new Response('Opening Hours succesfully updated',200);
+                    return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'Opening Hours succesfully updated',200);
                 } catch (Exception $ex){
-                    return new Response('We could not change the openinghours.',500);
+                    return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We could not change the openinghours.',500);
                 }
             } else {
-                return new Response('No timeframes received.',400);
+                return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'No timeframes received.',400);
             }
         } else {
-            return new Response('This place does not have opening hours, you should ADD them first.',400);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'This place does not have opening hours, you should ADD them first.',400);
         }
     }
 

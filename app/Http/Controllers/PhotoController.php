@@ -9,6 +9,7 @@ use App\Place;
 use App\Photo;
 use Auth;
 use DB;
+use App\Http\Controllers\Auth\AuthController;
 
 class PhotoController extends Controller
 {
@@ -34,7 +35,7 @@ class PhotoController extends Controller
                 $photo->userId = 1;//Auth::user()->id;
                 $photo->save();
             }
-            return 'Succesfully uploaded';
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'Successfully uploaded');
         } catch (Exception $ex){
             Log::error($ex);
             return new Response('Couldn\'t upload the picture.',500);
@@ -48,6 +49,6 @@ class PhotoController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
-        return json_encode($photos);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),json_encode($photos));
     }
 }

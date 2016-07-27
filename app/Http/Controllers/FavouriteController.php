@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Place;
 use \DB;
 use App\Favourite;
+use App\Http\Controllers\Auth\AuthController;
 
 
 class FavouriteController extends Controller
@@ -27,9 +28,9 @@ class FavouriteController extends Controller
 
         if ($favourites)
         {
-            return new Response($favourites, 200);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$favourites,200);
         }
-        return new Response('You haven\'t favourite any places.', 400);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'You haven\'t favourite any places.', 400);
     }
 
     public function addToFavourites($id){
@@ -38,7 +39,7 @@ class FavouriteController extends Controller
             $place = Place::find($id);
             if (!$place)
             {
-                return Response('We weren\'t able to find the place', 404);
+                return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We weren\'t able to find the place', 404);
             }
 
             $favourite = $this->create($user, $place);
@@ -47,7 +48,7 @@ class FavouriteController extends Controller
 
         } catch(Exception $ex){
             Log::error($ex);
-            return new Response('We were not able to add this place to your favourites.', 500);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We were not able to add this place to your favourites.', 500);
         }
     }
 
@@ -58,7 +59,7 @@ class FavouriteController extends Controller
 
             if (!$place)
             {
-                return new Response('We weren\'t able to find the place', 404);
+                return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We weren\'t able to find the place', 404);
             }
 
             $favouriteId = $this->createUniqueId($user, $place);
@@ -70,10 +71,10 @@ class FavouriteController extends Controller
                 $favourite->delete();
             }
 
-            return new Response('Successfully removed the place from your favourites.',200);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'Successfully removed the place from your favourites.',200);
         } catch (Exception $ex){
             Log::error($ex);
-            return new Response('We were not able to remove this place from you favourites.',500);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We were not able to remove this place from you favourites.',500);
         }
     }
 
@@ -85,7 +86,7 @@ class FavouriteController extends Controller
 
         if ($favourite)
         {
-            return new Response($favourite, 200);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$favourite, 200);
         }
 
         $favourite = new Favourite();

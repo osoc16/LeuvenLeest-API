@@ -12,7 +12,7 @@ class QuestionsController extends Controller
     public function getQuestions()
     {
         $questions = DB::table('questions')->get();
-        return new Response($questions, 200);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$questions, 200);
     }
 
     public function getRandomQuestion()
@@ -20,7 +20,7 @@ class QuestionsController extends Controller
         $questions = DB::table('questions')
             ->where('id', rand(1, 4))
             ->get();
-        return new Response($questions, 200);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$questions, 200);
     }
 
     public function getEvaluations($id)
@@ -30,7 +30,7 @@ class QuestionsController extends Controller
             ->where('placeId', $id)
             ->get();
 
-        return new Response($evaluations, 200);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$evaluations, 200);
     }
 
     public function evaluate($questionId, $placeId, $vote)
@@ -55,10 +55,10 @@ class QuestionsController extends Controller
                 ->increment('ratingGood');
         }
 
-        return DB::table('evaluations')
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),DB::table('evaluations')
             ->join('questions', 'evaluations.questionId', '=', 'questions.id')
             ->where('placeId', $placeId)
-            ->get();
+            ->get(),200);
     }
 
     public function getRating($placeId)
@@ -90,6 +90,6 @@ class QuestionsController extends Controller
             }
         }
 
-        return $return;
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$return,200);
     }
 } 
