@@ -91,10 +91,11 @@ class PlaceController extends Controller{
                 'categories.name as category',
                 'photos.name as photo'
                 )
-            ->take(10)
             ->get();
 
-        return new Response($this->sortByDistance($places, $lat, $lng), 200);
+        $places = $this->sortByDistance($places, $lat, $lng);        
+
+        return new Response(array_slice($places, 0, 10), 200);
     }
 
     public function getPlacesByCategory($categoryId, $lat, $lng)
