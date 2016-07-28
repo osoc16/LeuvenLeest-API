@@ -91,12 +91,34 @@ class CheckinController extends Controller
     public function getRecentCheckins()
     {
         $id = JWTAuth::toUser()->id;
+
+        $array = DB::select(DB::raw("(select placeId,max(id) as maximum from checkins where userId='$id' group by placeId order by 1 DESC)"));
+        $newArray = [];
+
+        foreach($array as $item){
+            $newArray[] = (int)$item->maximum;
+        }
+
+
+        $checkinIds = DB::table('checkins')
+            ->whereIn('id', $newArray)
+            ->select('id')
+            ->take(6)
+            ->get();
+
+        $newArray = [];
+        foreach($checkinIds as $item){
+            $newArray[] = (int)$item->id;
+        }
+
+        //var_dump($newArray);
+
         $places = DB::table('checkins')
             ->join('places','checkins.placeId','=','places.id')
-            ->join('photos', 'places.id', '=', 'photos.placeId')
+            ->leftjoin('photos', 'places.id', '=', 'photos.placeId')
             ->join('geolocations', 'places.geoId', '=', 'geolocations.id')
             ->join('categories', 'categories.id', '=', 'places.categoryId')
-            ->where('checkins.userId', $id)
+            ->whereIn('checkins.id',$newArray)
             ->select(
                 'places.id',
                 'places.name',
