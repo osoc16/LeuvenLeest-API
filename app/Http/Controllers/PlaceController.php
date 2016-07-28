@@ -71,7 +71,7 @@ class PlaceController extends Controller{
             $place = json_encode($place);
             return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),$place,200);
         }
-        return new Response('Place not found', 400);
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'Place not found', 400);
     }
 
     public function getPlaces($lat, $lng)
@@ -170,7 +170,7 @@ class PlaceController extends Controller{
             $geoLocation->save();
         } catch (Exception $ex)
         {
-            return new Response('We are not able to create a new geolocation.', 500);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We are not able to create a new geolocation.', 500);
         }
 
         //Create a new place
@@ -190,7 +190,7 @@ class PlaceController extends Controller{
 
         } catch (Exception $ex)
         {
-            return new Response('We are not able to create a new place.', 500);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We are not able to create a new place.', 500);
         }
 
         //Add evaluations
@@ -207,7 +207,7 @@ class PlaceController extends Controller{
 
         } catch (Exception $ex)
         {
-            return new Response('We are not able to create a new evaluation.', 500);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We are not able to create a new evaluation.', 500);
         }
     }
 

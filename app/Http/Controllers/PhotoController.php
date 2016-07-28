@@ -35,10 +35,10 @@ class PhotoController extends Controller
                 $photo->userId = 1;//Auth::user()->id;
                 $photo->save();
             }
-            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'Successfully uploaded');
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'Successfully uploaded',200);
         } catch (Exception $ex){
             Log::error($ex);
-            return new Response('Couldn\'t upload the picture.',500);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'Couldn\'t upload the picture.',500);
         }
     }
 
@@ -49,6 +49,6 @@ class PhotoController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
-        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),json_encode($photos));
+        return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),json_encode($photos),200);
     }
 }

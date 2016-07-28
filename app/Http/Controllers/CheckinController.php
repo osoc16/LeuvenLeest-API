@@ -60,7 +60,7 @@ class CheckinController extends Controller
 
         if (!$place)
         {
-            return new Response('We weren\'t able to find the place', 404);
+            return (new AuthController)->checkToken(JWTAuth::getToken(),JWTAuth::getPayload(),'We weren\'t able to find the place', 404);
         }
 
         try
