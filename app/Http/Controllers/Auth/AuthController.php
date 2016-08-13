@@ -135,7 +135,7 @@ class AuthController extends Controller
         $validator = $this->validator($request->all());
 
         if($validator->fails()){
-            return $validator->errors();
+            return new Response($validator->errors(), 500);
         }
 
         $name = $request->input('name');
